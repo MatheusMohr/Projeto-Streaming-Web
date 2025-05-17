@@ -1,0 +1,340 @@
+body {
+  background-image: url('https://w.wallhaven.cc/full/0w/wallhaven-0w2de6.jpg');
+  background-position: center center;
+  /* Centraliza a imagem */
+  background-repeat: no-repeat;
+  /* Impede a repetição da imagem */
+  background-size: cover;
+  /* A imagem cobre toda a tela sem distorcer */
+  background-color: #eeeeee;
+  /* Cor de fundo caso a imagem não carregue */
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  /* Garante que o fundo ocupe toda a altura da tela */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  /* Garante que o conteúdo comece no topo */
+
+  /* Animação suave de zoom lento no background */
+  animation: backgroundZoom 20s ease-in-out infinite alternate;
+}
+
+@keyframes backgroundZoom {
+  0% {
+    background-size: 105%;
+  }
+
+  100% {
+    background-size: 100%;
+  }
+}
+
+/* Estilos para o cabeçalho */
+header {
+  background: linear-gradient(25deg, #000000, #272727);
+  padding: 5px 10px;
+  margin: 0;
+  border-radius: 0px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
+  overflow: hidden;
+
+  /* Fade in e slide do topo */
+  animation: slideDownFadeIn 1s ease forwards;
+}
+
+@keyframes slideDownFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header img {
+  width: 70px;
+  object-fit: contain;
+}
+
+.top-links {
+  display: flex;
+  justify-content: right;
+  gap: 10px;
+  padding: 10px 15px;
+  width: 100%;
+  margin-left: 0px;
+  margin-right: 10px;
+  overflow-x: hidden;
+}
+
+.top-links .btn {
+  font-family: 'Montserrat', sans-serif;
+  padding: 9px 20px;
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  border-radius: 80px;
+  font-size: 18px;
+  transition: background-color 0.3s ease;
+}
+
+.top-links .btn:hover {
+  background-color: #3d3d3d;
+}
+
+@keyframes pulseBtn {
+
+  0%,
+  100% {
+    box-shadow: 0 0 8px 0 rgba(255, 255, 255, 0.6);
+  }
+
+  50% {
+    box-shadow: 0 0 20px 6px rgba(255, 255, 255, 0.9);
+  }
+}
+
+.ajuda-link {
+  color: #fa1c1c;
+  text-decoration: none;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+}
+
+body::before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0.5;
+  width: 900%;
+  height: 100%;
+  background: url("");
+  background-position: center;
+}
+
+nav {
+  position: fixed;
+  padding: 25px 60px;
+  z-index: 1;
+}
+
+nav a img {
+  width: 167px;
+}
+
+.form-wrapper {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 10px;
+  margin-top: 35px;
+  padding: 25px;
+  width: 380px;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.89);
+  animation: fadeScaleIn 0.8s ease forwards;
+}
+
+@keyframes fadeScaleIn {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.85);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.form-wrapper h2 {
+  color: #fff;
+  font-size: 2rem;
+
+  animation: slideLeftFadeIn 1s ease forwards;
+}
+
+@keyframes slideLeftFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-15px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.form-wrapper form {
+  margin: 25px 0 65px;
+}
+
+form .form-control {
+  height: 50px;
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.form-control input {
+  height: 100%;
+  width: 100%;
+  background: #333;
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 1rem;
+  padding: 0 20px;
+  transition: background-color 0.3s ease;
+}
+
+.form-control input:is(:focus, :valid) {
+  background: #444;
+  padding: 16px 20px 0;
+}
+
+.form-control label {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  pointer-events: none;
+  color: #8c8c8c;
+  transition: all 0.1s ease;
+}
+
+.form-control input:is(:focus, :valid)~label {
+  font-size: 0.75rem;
+  transform: translateY(-130%);
+}
+
+form button {
+  width: 100%;
+  padding: 13px 0;
+  font-size: 1rem;
+  background: #e50914;
+  color: #fff;
+  font-weight: 500;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  margin: 1px 0 1px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: 0.1s ease;
+}
+
+form button:hover {
+  background: #c40812;
+
+  animation-play-state: paused;
+}
+
+.form-wrapper a {
+  text-decoration: none;
+}
+
+.form-wrapper a:hover {
+  text-decoration: underline;
+}
+
+.form-wrapper :where(label, p, small, a) {
+  color: #b3b3b3;
+}
+
+form .remember-me {
+  display: flex;
+  margin-top: 10px;
+}
+
+form .remember-me input {
+  margin-right: 5px;
+  accent-color: #b3b3b3;
+}
+
+form .form-help :where(label, a) {
+  font-size: 0.9rem;
+}
+
+.form-wrapper p a {
+  color: #fff;
+}
+
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper input {
+  padding-right: 10px;
+  /* espaço maior para o ícone */
+}
+
+.eye-icon {
+  margin-right: 20px;
+  position: absolute;
+  right: 0px;
+  margin-top: 22px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  user-select: none;
+  color: #aaaaaa;
+  width: 10px;
+  height: 10px;
+  z-index: 2;
+
+  /* Transição suave da cor no hover */
+  transition: color 0.3s ease;
+}
+
+.eye-icon:hover {
+  color: #e50914;
+}
+
+@media (max-width: 740px) {
+  body::before {
+    display: none;
+  }
+
+  nav,
+  .form-wrapper {
+    padding: 20px;
+  }
+
+  nav a img {
+    width: 140px;
+  }
+
+  .form-wrapper {
+    width: 100%;
+    top: 43%;
+  }
+
+  .form-wrapper form {
+    margin: 25px 0 40px;
+  }
+}

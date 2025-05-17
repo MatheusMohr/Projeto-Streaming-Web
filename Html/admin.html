@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Admin - Adicionar Filme | MATHFlix</title>
+<script src="https://cdn.jsdelivr.net/npm/pouchdb@7.3.0/dist/pouchdb.min.js"></script>
+<script src="../JS/admin.js" defer></script>
+</head>
+<body>
+  <button id="btn-ver-filmes" style="margin-bottom:20px;">Ver Catálogo de Filmes</button>
+
+  <h2>Adicionar Filme no Catálogo</h2>
+  <form id="add-movie-form">
+    <label>Nome do Filme:</label><br />
+    <input type="text" id="nome" required /><br />
+
+    <label>URL da Imagem (capa):</label><br />
+    <input type="url" id="imagem" required /><br />
+
+    <label>URL do Trailer (embed YouTube):</label><br />
+    <input type="url" id="trailer" required /><br />
+
+    <label>Classificação Indicativa:</label><br />
+    <input type="text" id="classificacao" required /><br />
+
+    <label>Descrição:</label><br />
+    <textarea id="descricao" rows="4" required></textarea><br />
+
+    <label>Duração:</label><br />
+    <input type="text" id="duracao" required /><br />
+
+    <label>Gênero (separe por vírgula):</label><br />
+    <input type="text" id="genero" required /><br />
+
+    <label>Ano de Lançamento:</label><br />
+    <input type="number" id="ano" required /><br /><br />
+
+    <button type="submit">Adicionar Filme</button>
+  </form>
+
+  <h1>Administração de Usuários</h1>
+  <div id="user-list">
+    <!-- Usuários vão ser listados aqui -->
+  </div>
+
+  <h3>Filmes Cadastrados</h3>
+  <ul id="filme-lista"></ul>
+
+  
+  <button id="logout-btn">Sair</button>
+</body>
+</html>
