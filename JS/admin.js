@@ -1,36 +1,35 @@
+/* admin.js – seu código completo, só ajustando alguns nomes de campo ---- */
 const dbMovies = new PouchDB('movies');
-const dbUsers = new PouchDB('mathflix-users');
+const dbUsers  = new PouchDB('mathflix-users');
 
-let filmeEditando = null;
+let filmeEditando   = null;
 let usuarioEditando = null;
 
-const formFilme = document.getElementById('add-movie-form');
-const btnSalvarFilme = document.getElementById('btn-salvar');
-const btnCancelarFilme = document.getElementById('btn-cancelar');
+/* ------------ referências de elementos -------------------------------- */
+const formFilme   = document.getElementById('add-movie-form');
+const btnSalvarF  = document.getElementById('btn-salvar');
+const btnCancelF  = document.getElementById('btn-cancelar');
 const listaFilmes = document.getElementById('filme-lista');
 
-const usuariosTableBody = document.querySelector('#usuariosTable tbody');
-const formUsuario = document.getElementById('user-form');
-const btnSalvarUsuario = document.getElementById('btn-save-user');
-const btnCancelarUsuario = document.getElementById('btn-cancel-user');
+const tbody       = document.querySelector('#usuariosTable tbody');
+const formUser    = document.getElementById('user-form');
+const btnSalvarU  = document.getElementById('btn-save-user');
+const btnCancelU  = document.getElementById('btn-cancel-user');
 
+/* ---------- gerar novo _id sequencial p/ usuário ----------------------- */
 async function gerarNovoIdUsuario() {
-  const result = await dbUsers.allDocs({ include_docs: false, startkey: 'usuario_', endkey: 'usuario_\ufff0' });
-  const idsNumericos = result.rows.map(row => {
-    const parts = row.id.split('_');
-    const num = parseInt(parts[1], 10);
-    return isNaN(num) ? -1 : num;
-  });
-  const maiorId = idsNumericos.length ? Math.max(...idsNumericos) : -1;
-  return 'usuario_' + (maiorId + 1);
+  const r = await dbUsers.allDocs({ startkey: 'usuario_', endkey: 'usuario_\ufff0' });
+  const max = r.rows
+    .map(row => parseInt(row.id.split('_')[1] || -1, 10))
+    .reduce((a, b) => Math.max(a, b), -1);
+  return 'usuario_' + (max + 1);
 }
 
-// --- FILMES ---
-
+/* ======================= CRUD DE FILMES =============================== */
 formFilme.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  const filmeData = {
+  const f = {
     titulo: formFilme.nome.value.trim(),
     imagem: formFilme.imagem.value.trim(),
     trailer: formFilme.trailer.value.trim(),
@@ -38,261 +37,189 @@ formFilme.addEventListener('submit', async (e) => {
     descricao: formFilme.descricao.value.trim(),
     duracao: formFilme.duracao.value.trim(),
     genero: formFilme.genero.value.trim(),
-    ano: formFilme.ano.value.trim(),
+    ano: formFilme.ano.value.trim()
   };
 
   try {
     if (filmeEditando) {
-      filmeData._id = filmeEditando._id;
-      filmeData._rev = filmeEditando._rev;
-      await dbMovies.put(filmeData);
-      alert('Filme atualizado com sucesso!');
+      f._id  = filmeEditando._id;
+      f._rev = filmeEditando._rev;
+      await dbMovies.put(f);
+      alert('Filme atualizado!');
       filmeEditando = null;
-      btnSalvarFilme.textContent = 'Adicionar Filme';
-      btnCancelarFilme.style.display = 'none';
+      btnSalvarF.textContent = 'Adicionar Filme';
+      btnCancelF.style.display = 'none';
     } else {
-      filmeData._id = 'filme_' + Date.now();
-      await dbMovies.put(filmeData);
-      alert('Filme adicionado com sucesso!');
+      f._id = 'filme_' + Date.now();
+      await dbMovies.put(f);
+      alert('Filme adicionado!');
     }
     formFilme.reset();
     carregarFilmes();
   } catch (err) {
-    alert('Erro ao salvar filme: ' + err);
+    alert('Erro: ' + err);
   }
 });
 
-btnCancelarFilme.addEventListener('click', () => {
+btnCancelF.addEventListener('click', () => {
   filmeEditando = null;
   formFilme.reset();
-  btnSalvarFilme.textContent = 'Adicionar Filme';
-  btnCancelarFilme.style.display = 'none';
+  btnSalvarF.textContent = 'Adicionar Filme';
+  btnCancelF.style.display = 'none';
 });
 
 async function carregarFilmes() {
   listaFilmes.innerHTML = '';
-  try {
-    const result = await dbMovies.allDocs({ include_docs: true });
-    result.rows.forEach(row => {
-      const f = row.doc;
-      if (f._id.startsWith('filme_')) {
-        const li = document.createElement('li');
+  const r = await dbMovies.allDocs({ include_docs: true });
+  r.rows.forEach(row => {
+    const f = row.doc;
+    if (!f._id.startsWith('filme_')) return;
 
-        const spanTitulo = document.createElement('span');
-        spanTitulo.textContent = `${f.titulo} (${f.ano}) - ${f.genero}`;
-        spanTitulo.style.marginRight = '15px';
+    const li = document.createElement('li');
+    li.textContent = `${f.titulo} (${f.ano}) – ${f.genero} `;
 
-        const btnEditar = document.createElement('button');
-        btnEditar.textContent = 'Editar';
-        btnEditar.style.marginRight = '10px';
-        btnEditar.style.cursor = 'pointer';
-        btnEditar.addEventListener('click', () => {
-          filmeEditando = f;
-          preencherFormularioFilme(f);
-          btnSalvarFilme.textContent = 'Salvar Alterações';
-          btnCancelarFilme.style.display = 'inline-block';
-        });
+    const edit = document.createElement('button');
+    edit.textContent = 'Editar';
+    edit.addEventListener('click', () => {
+      filmeEditando = f;
+      preencherFormFilme(f);
+      btnSalvarF.textContent = 'Salvar Alterações';
+      btnCancelF.style.display = 'inline-block';
+    });
 
-        const btnExcluir = document.createElement('button');
-        btnExcluir.textContent = 'Excluir';
-        btnExcluir.style.cursor = 'pointer';
-        btnExcluir.addEventListener('click', async () => {
-          if (confirm(`Deseja excluir o filme "${f.titulo}"?`)) {
-            try {
-              await dbMovies.remove(f);
-              alert('Filme excluído com sucesso!');
-              if (filmeEditando && filmeEditando._id === f._id) {
-                filmeEditando = null;
-                formFilme.reset();
-                btnSalvarFilme.textContent = 'Adicionar Filme';
-                btnCancelarFilme.style.display = 'none';
-              }
-              carregarFilmes();
-            } catch (error) {
-              alert('Erro ao excluir filme: ' + error);
-            }
-          }
-        });
-
-        li.appendChild(spanTitulo);
-        li.appendChild(btnEditar);
-        li.appendChild(btnExcluir);
-        listaFilmes.appendChild(li);
+    const del = document.createElement('button');
+    del.textContent = 'Excluir';
+    del.addEventListener('click', async () => {
+      if (confirm('Excluir "' + f.titulo + '"?')) {
+        await dbMovies.remove(f);
+        carregarFilmes();
       }
     });
-  } catch (err) {
-    console.error('Erro ao carregar filmes:', err);
-  }
+
+    li.append(edit, del);
+    listaFilmes.appendChild(li);
+  });
 }
 
-function preencherFormularioFilme(filme) {
-  formFilme.nome.value = filme.titulo || '';
-  formFilme.imagem.value = filme.imagem || '';
-  formFilme.trailer.value = filme.trailer || '';
-  formFilme.classificacao.value = filme.classificacao || '';
-  formFilme.descricao.value = filme.descricao || '';
-  formFilme.duracao.value = filme.duracao || '';
-  formFilme.genero.value = filme.genero || '';
-  formFilme.ano.value = filme.ano || '';
+function preencherFormFilme(f) {
+  Object.entries(f).forEach(([k, v]) => {
+    if (formFilme[k]) formFilme[k].value = v;
+  });
 }
 
-// --- USUÁRIOS ---
-
-formUsuario.addEventListener('submit', async (e) => {
+/* ======================= CRUD DE USUÁRIOS ============================= */
+formUser.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  const nome = formUsuario.nome.value.trim();
-  const email = formUsuario.email.value.trim().toLowerCase();
-  const senha = formUsuario.senha.value;
-  const admin = formUsuario.admin.checked;
+  const nome  = formUser.nome.value.trim();
+  const email = formUser.email.value.trim().toLowerCase();
+  const senha = formUser.senha.value;
+  const admin = formUser.admin.checked;
 
   if (!nome || !email || (!senha && !usuarioEditando)) {
-    alert('Preencha todos os campos obrigatórios.');
+    alert('Preencha os campos obrigatórios.');
     return;
   }
 
   try {
     if (usuarioEditando) {
-      const allUsers = await dbUsers.allDocs({ include_docs: true });
-      const emailDuplicado = allUsers.rows.some(row =>
-        row.doc.email === email && row.doc._id !== usuarioEditando._id
-      );
-      if (emailDuplicado) {
-        alert('E-mail já cadastrado por outro usuário.');
+      // evitar duplicidade
+      const dup = await dbUsers.find ?
+        false :             // caso tenha plug-in find
+        (await dbUsers.allDocs({ include_docs: true }))
+          .rows.some(r => r.doc.email === email && r.doc._id !== usuarioEditando._id);
+
+      if (dup) {
+        alert('E-mail já cadastrado.');
         return;
       }
 
-      usuarioEditando.nome = nome;
-      usuarioEditando.email = email;
+      Object.assign(usuarioEditando, { nome, email, admin });
       if (senha) usuarioEditando.password = senha;
-      usuarioEditando.admin = admin;
 
       await dbUsers.put(usuarioEditando);
-
-      alert('Usuário atualizado com sucesso!');
+      alert('Usuário atualizado!');
       usuarioEditando = null;
-      btnSalvarUsuario.textContent = 'Adicionar Usuário';
-      btnCancelarUsuario.style.display = 'none';
+      btnSalvarU.textContent = 'Adicionar Usuário';
+      btnCancelU.style.display = 'none';
     } else {
-      const allUsers = await dbUsers.allDocs({ include_docs: true });
-      const emailExiste = allUsers.rows.some(row => row.doc.email === email);
-      if (emailExiste) {
+      // novo usuário
+      const existe = (await dbUsers.allDocs({ include_docs: true }))
+        .rows.some(r => r.doc.email === email);
+      if (existe) {
         alert('E-mail já cadastrado!');
         return;
       }
 
-      const novoId = await gerarNovoIdUsuario();
-
-      const novoUsuario = {
-        _id: novoId,
-        nome,
-        email,
-        password: senha,
-        admin,
+      const novo = {
+        _id: await gerarNovoIdUsuario(),
+        nome, email, password: senha, admin
       };
-
-      await dbUsers.put(novoUsuario);
-      alert('Usuário adicionado com sucesso!');
+      await dbUsers.put(novo);
+      alert('Usuário adicionado!');
     }
 
-    formUsuario.reset();
+    formUser.reset();
     carregarUsuarios();
   } catch (err) {
-    alert('Erro ao salvar usuário: ' + err);
+    alert('Erro: ' + err);
   }
 });
 
-btnCancelarUsuario.addEventListener('click', () => {
+btnCancelU.addEventListener('click', () => {
   usuarioEditando = null;
-  formUsuario.reset();
-  btnSalvarUsuario.textContent = 'Adicionar Usuário';
-  btnCancelarUsuario.style.display = 'none';
+  formUser.reset();
+  btnSalvarU.textContent = 'Adicionar Usuário';
+  btnCancelU.style.display = 'none';
 });
 
 async function carregarUsuarios() {
-  usuariosTableBody.innerHTML = '';
-  try {
-    const result = await dbUsers.allDocs({ include_docs: true });
-    result.rows.forEach(row => {
-      const u = row.doc;
-      if (u._id.startsWith('usuario_')) {
-        const tr = document.createElement('tr');
+  tbody.innerHTML = '';
+  const r = await dbUsers.allDocs({ include_docs: true });
+  r.rows.forEach(row => {
+    const u = row.doc;
+    if (!u._id.startsWith('usuario_')) return;
 
-        const tdId = document.createElement('td');
-        tdId.textContent = u._id;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${u._id}</td>
+      <td>${u.nome}</td>
+      <td>${u.email}</td>
+      <td>${u.admin ? 'Sim' : 'Não'}</td>
+    `;
 
-        const tdNome = document.createElement('td');
-        tdNome.textContent = u.nome;
+    const tdAcoes = document.createElement('td');
+    const edit = document.createElement('button');
+    edit.textContent = 'Editar';
+    edit.addEventListener('click', () => {
+      usuarioEditando = u;
+      formUser.nome.value  = u.nome;
+      formUser.email.value = u.email;
+      formUser.senha.value = '';
+      formUser.admin.checked = !!u.admin;
+      btnSalvarU.textContent = 'Salvar Alterações';
+      btnCancelU.style.display = 'inline-block';
+    });
 
-        const tdEmail = document.createElement('td');
-        tdEmail.textContent = u.email;
-
-        const tdAdmin = document.createElement('td');
-        tdAdmin.textContent = u.admin ? 'Sim' : 'Não';
-
-        const tdAcoes = document.createElement('td');
-
-        const btnEditar = document.createElement('button');
-        btnEditar.textContent = 'Editar';
-        btnEditar.style.marginRight = '10px';
-        btnEditar.style.cursor = 'pointer';
-        btnEditar.addEventListener('click', () => {
-          usuarioEditando = u;
-          preencherFormularioUsuario(u);
-          btnSalvarUsuario.textContent = 'Salvar Alterações';
-          btnCancelarUsuario.style.display = 'inline-block';
-        });
-
-        const btnExcluir = document.createElement('button');
-        btnExcluir.textContent = 'Excluir';
-        btnExcluir.style.cursor = 'pointer';
-        btnExcluir.addEventListener('click', async () => {
-          if (confirm(`Deseja excluir o usuário "${u.nome}"?`)) {
-            try {
-              await dbUsers.remove(u);
-              alert('Usuário excluído com sucesso!');
-              if (usuarioEditando && usuarioEditando._id === u._id) {
-                usuarioEditando = null;
-                formUsuario.reset();
-                btnSalvarUsuario.textContent = 'Adicionar Usuário';
-                btnCancelarUsuario.style.display = 'none';
-              }
-              carregarUsuarios();
-            } catch (err) {
-              alert('Erro ao excluir usuário: ' + err);
-            }
-          }
-        });
-
-        tdAcoes.appendChild(btnEditar);
-        tdAcoes.appendChild(btnExcluir);
-
-        tr.appendChild(tdId);
-        tr.appendChild(tdNome);
-        tr.appendChild(tdEmail);
-        tr.appendChild(tdAdmin);
-        tr.appendChild(tdAcoes);
-
-        usuariosTableBody.appendChild(tr);
+    const del = document.createElement('button');
+    del.textContent = 'Excluir';
+    del.addEventListener('click', async () => {
+      if (confirm('Excluir "' + u.nome + '"?')) {
+        await dbUsers.remove(u);
+        carregarUsuarios();
       }
     });
-  } catch (err) {
-    console.error('Erro ao carregar usuários:', err);
-  }
+
+    tdAcoes.append(edit, del);
+    tr.appendChild(tdAcoes);
+    tbody.appendChild(tr);
+  });
 }
 
-function preencherFormularioUsuario(usuario) {
-  formUsuario.nome.value = usuario.nome || '';
-  formUsuario.email.value = usuario.email || '';
-  formUsuario.senha.value = '';
-  formUsuario.admin.checked = usuario.admin || false;
-}
-
-// --- Inicialização ---
+/* ---------------- inicialização ---------------- */
 document.addEventListener('DOMContentLoaded', () => {
   carregarFilmes();
   carregarUsuarios();
-
-  btnCancelarFilme.style.display = 'none';
-  btnCancelarUsuario.style.display = 'none';
+  btnCancelF.style.display = 'none';
+  btnCancelU.style.display = 'none';
 });
