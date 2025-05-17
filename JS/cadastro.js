@@ -1,29 +1,50 @@
-const db = new PouchDB('mathflix-users');
+const dbUsers = new PouchDB('mathflix-users');
 
-document.querySelector('.form-wrapper form').addEventListener('submit', async (e) => {
+// Função para gerar novo ID sequencial
+async function gerarNovoIdUsuario() {
+  const result = await dbUsers.allDocs({ include_docs: false, startkey: 'usuario_', endkey: 'usuario_\ufff0' });
+  const idsNumericos = result.rows.map(row => {
+    const parts = row.id.split('_');
+    const num = parseInt(parts[1], 10);
+    return isNaN(num) ? -1 : num;
+  });
+  const maiorId = idsNumericos.length ? Math.max(...idsNumericos) : -1;
+  return 'usuario_' + (maiorId + 1);
+}
+
+document.getElementById('register-form').addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  const nome = document.getElementById('nome').value.toLowerCase();
-  const email = document.getElementById('email').value.toLowerCase();
+  const nome = document.getElementById('nome').value.trim();
+  const email = document.getElementById('email').value.trim().toLowerCase();
   const password = document.getElementById('password').value;
 
-  try {
-    const existingUser = await db.get('usuario_' + email).catch(() => null);
+  if (!nome || !email || !password) {
+    alert('Preencha todos os campos!');
+    return;
+  }
 
-    if (existingUser) {
+  try {
+    // Verifica se email já está cadastrado
+    const allUsers = await dbUsers.allDocs({ include_docs: true });
+    const emailExiste = allUsers.rows.some(row => row.doc.email === email);
+    if (emailExiste) {
       alert('E-mail já cadastrado!');
       return;
     }
 
+    // Gera novo ID sequencial
+    const novoId = await gerarNovoIdUsuario();
+
     const user = {
-      _id: 'usuario_' + email,
+      _id: novoId,
       nome,
       email,
-      password, // Atenção: para produção, nunca salve senha em texto puro!
-      admin: false
+      password,
+      admin: false,
     };
 
-    await db.put(user);
+    await dbUsers.put(user);
     alert('Cadastro realizado com sucesso!');
     window.location.href = '../Html/login.html';
 

@@ -3,50 +3,93 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Admin - Adicionar Filme | MATHFlix</title>
+  <title>Admin - MATHFlix</title>
   <link rel="stylesheet" href="../Css/admin.css" />
-</head>
-<body>
-  <a href="../Html/filmes.html" style="display: inline-block; margin-bottom: 20px; padding: 8px 16px; background-color: #f11717; color: white; text-decoration: none; border-radius: 4px; font-weight: bold;">
-    Ver Catálogo de Filmes
-  </a>
-
-  <h2>Adicionar Filme no Catálogo</h2>
-  <form id="add-movie-form">
-    <label>Nome do Filme:</label><br />
-    <input type="text" name="nome" required /><br />
-
-    <label>URL da Imagem (capa):</label><br />
-    <input type="url" name="imagem" required /><br />
-
-    <label>URL do Trailer (embed YouTube):</label><br />
-    <input type="url" name="trailer" required /><br />
-
-    <label>Classificação Indicativa:</label><br />
-    <input type="text" name="classificacao" required /><br />
-
-    <label>Descrição:</label><br />
-    <textarea name="descricao" rows="4" required></textarea><br />
-
-    <label>Duração:</label><br />
-    <input type="text" name="duracao" required /><br />
-
-    <label>Gênero (separe por vírgula):</label><br />
-    <input type="text" name="genero" required /><br />
-
-    <label>Ano de Lançamento:</label><br />
-    <input type="number" name="ano" required /><br /><br />
-
-    <button type="submit" id="btn-salvar">Adicionar Filme</button>
-    <button type="button" id="btn-cancelar" style="display:none; margin-left:10px;">Cancelar Edição</button>
-  </form>
-
-  <h3>Filmes Cadastrados</h3>
-  <ul id="filme-lista"></ul>
-
-  <button id="logout-btn">Sair</button>
-
   <script src="https://cdn.jsdelivr.net/npm/pouchdb@7.3.0/dist/pouchdb.min.js"></script>
   <script src="../JS/admin.js" defer></script>
+</head>
+<body>
+  <header>
+    <a href="../Html/filmes.html">Acessar Catalogo</a>
+    <a href="../Html/index.html">Voltar ao menu</a>
+    <h1>Administração MathCine</h1>
+  </header>
+
+  <main id="admin-container">
+
+    <section id="movie-section">
+      <h2>Adicionar / Editar Filme</h2>
+      <form id="add-movie-form">
+        <label>Nome do Filme:</label>
+        <input type="text" name="nome" required />
+
+        <label>URL da Imagem (capa):</label>
+        <input type="url" name="imagem" required />
+
+        <label>URL do Trailer (embed YouTube):</label>
+        <input type="url" name="trailer" required />
+
+        <label>Classificação Indicativa:</label>
+        <input type="text" name="classificacao" required />
+
+        <label>Descrição:</label>
+        <textarea name="descricao" rows="4" required></textarea>
+
+        <label>Duração:</label>
+        <input type="text" name="duracao" required />
+
+        <label>Gênero (separe por vírgula):</label>
+        <input type="text" name="genero" required />
+
+        <label>Ano de Lançamento:</label>
+        <input type="number" name="ano" required />
+
+        <div class="form-buttons">
+          <button type="submit" id="btn-salvar">Adicionar Filme</button>
+          <button type="button" id="btn-cancelar" style="display:none;">Cancelar Edição</button>
+        </div>
+      </form>
+
+      <h3>Filmes Cadastrados</h3>
+      <ul id="filme-lista"></ul>
+    </section>
+
+    <!-- Coluna usuários -->
+    <section id="users-section">
+      <h2>Adicionar / Editar Usuário</h2>
+      <form id="user-form">
+        <label>Nome:</label>
+        <input type="text" name="nome" required />
+
+        <label>Email:</label>
+        <input type="email" name="email" required />
+
+        <label>Senha:</label>
+        <input type="password" name="senha" placeholder="Deixe vazio para não alterar" />
+
+        <label><input type="checkbox" name="admin" /> Admin</label>
+
+        <div class="form-buttons">
+          <button type="submit" id="btn-save-user">Adicionar Usuário</button>
+          <button type="button" id="btn-cancel-user" style="display:none;">Cancelar Edição</button>
+        </div>
+      </form>
+
+      <h3>Usuários Cadastrados</h3>
+      <table id="usuariosTable" cellspacing="0" cellpadding="5">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Admin</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+  </main>
 </body>
 </html>

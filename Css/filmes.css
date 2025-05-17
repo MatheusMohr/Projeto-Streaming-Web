@@ -646,13 +646,14 @@ select#categoria:focus {
 
 /* =============== FOOTER ========================== */
 .fixarRodape {
+  position: relative;
+  margin: 0 ;
   background-color: #141414;
   padding: 12px 0;
   text-align: center;
   color: #777;
   font-size: 0.9rem;
   border-top: 1px solid #333;
-  margin-top: 40px;
 }
 
 /* =============== RESPONSIVIDADE ADICIONAL =============== */

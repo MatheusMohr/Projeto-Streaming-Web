@@ -1,134 +1,212 @@
-/* admin.css */
+/* Reset básico */
+* {
+  box-sizing: border-box;
+}
 
 body {
-    background: #0f0f0f;
-    color: #eee;
-    font-family: Arial, sans-serif;
-    padding: 20px;
+  background: #0f0f0f;
+  color: #eee;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  margin: 0;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+header h1 {
+  color: #f11717;
+  margin: 0;
+}
+
+#logout-btn {
+  background: #f11717;
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#logout-btn:hover {
+  background: #d30f0f;
+}
+
+/* Container principal com duas colunas */
+#admin-container {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Coluna filmes */
+#movie-section {
+  flex: 1 1 450px;
+  max-width: 500px;
+}
+
+#movie-section h2,
+#movie-section h3,
+#users-section h2,
+#users-section h3 {
+  color: #f11717;
+  margin-bottom: 20px;
+}
+
+/* Formulários */
+form {
+  background: #212020;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(241, 23, 23, 0.5);
+  margin-bottom: 30px;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #f11717;
+}
+
+input[type="text"],
+input[type="url"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+textarea {
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #444;
+  background: #1a1a1a;
+  color: #eee;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: #f11717;
+  background: #222;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Botões dos formulários */
+.form-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-start;
+}
+
+button[type="submit"],
+button[type="button"] {
+  background: #f11717;
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+button[type="submit"]:hover,
+button[type="button"]:hover {
+  background: #d30f0f;
+}
+
+/* Lista de filmes */
+#filme-lista {
+  list-style: none;
+  padding: 0;
+  color: #eee;
+  font-weight: 600;
+}
+
+#filme-lista li {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/* Coluna usuários */
+#users-section {
+  flex: 1 1 600px;
+  max-width: 700px;
+  overflow-x: auto;
+}
+
+/* Tabela usuários */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #212020;
+  color: #eee;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(241, 23, 23, 0.5);
+}
+
+th, td {
+  padding: 10px;
+  border-bottom: 1px solid #333;
+  text-align: left;
+  vertical-align: middle;
+}
+
+th {
+  background: #2e2e2e;
+  color: #f11717;
+}
+
+tr:hover {
+  background: #3a3a3a;
+}
+
+/* Botões ação na tabela */
+button {
+  font-size: 14px;
+}
+
+#usuariosTable button {
+  background: transparent;
+  border: none;
+  color: #f11717;
+  font-weight: 700;
+  cursor: pointer;
+  margin-right: 8px;
+  padding: 0;
+}
+
+#usuariosTable button:hover {
+  color: #d30f0f;
+}
+
+/* Responsividade */
+@media (max-width: 900px) {
+  #admin-container {
+    flex-direction: column;
+    gap: 30px;
   }
-  
-  h1, h2, h3 {
-    color: #f11717;
-    margin-bottom: 15px;
+
+  #movie-section, #users-section {
+    max-width: 100%;
+    flex: none;
   }
-  
-  button {
-    background: #f11717;
-    color: #fff;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-  }
-  
-  button:hover {
-    background: #d30f0f;
-  }
-  
-  form {
-    background: #212020;
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 500px;
-    margin-bottom: 40px;
-    box-shadow: 0 0 15px rgba(241, 23, 23, 0.5);
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 6px;
-    font-weight: 600;
-    color: #f11717;
-  }
-  
-  input, textarea {
-    width: 100%;
-    margin-bottom: 15px;
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #444;
-    background: #1a1a1a;
-    color: #eee;
-    font-size: 14px;
-  }
-  
-  input:focus, textarea:focus {
-    outline: none;
-    border-color: #f11717;
-    background: #222;
-  }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    max-width: 900px;
-    margin-bottom: 40px;
-    box-shadow: 0 0 15px rgba(241, 23, 23, 0.5);
-    background: #212020;
-    color: #eee;
-    border-radius: 10px;
-  }
-  
-  th, td {
-    padding: 10px;
-    border-bottom: 1px solid #333;
-    text-align: left;
-  }
-  
-  th {
-    background: #2e2e2e;
-    color: #f11717;
-  }
-  
-  tr:hover {
-    background: #3a3a3a;
-  }
-  
-  .action-btn {
-    background: transparent;
-    border: none;
-    color: #f11717;
-    font-weight: 700;
-    cursor: pointer;
-    margin-right: 8px;
-    font-size: 14px;
-  }
-  
-  .action-btn:hover {
-    color: #d30f0f;
-  }
-  
-  #filme-lista li {
-    margin-bottom: 10px;
-    list-style: none;
-    font-weight: 600;
-  }
-  
-  .modal {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; width: 100vw; height: 100vh;
-    background: rgba(0, 0, 0, 0.7);
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .modal.active {
-    display: flex;
-  }
-  
-  .modal-content {
-    background: #222;
-    color: #eee;
-    padding: 20px;
-    border-radius: 10px;
-    width: 320px;
-    position: relative;
-  }
-  
-  #cancel-edit {
-    margin-left: 10px;
-    background: #555;
-  }
-  
+}
