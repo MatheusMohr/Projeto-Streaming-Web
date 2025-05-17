@@ -22,7 +22,6 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
     const user = await db.get('usuario_' + email);
 
     if (user.password === password) {
-      alert('Login realizado com sucesso!');
       sessionStorage.setItem('usuario_logado', email);
       sessionStorage.setItem('usuario_admin', user.admin ? 'true' : 'false');
 

@@ -1,26 +1,18 @@
 body {
   background-image: url('https://w.wallhaven.cc/full/0w/wallhaven-0w2de6.jpg');
   background-position: center center;
-  /* Centraliza a imagem */
   background-repeat: no-repeat;
-  /* Impede a repetição da imagem */
   background-size: cover;
-  /* A imagem cobre toda a tela sem distorcer */
-  background-color: #eeeeee;
-  /* Cor de fundo caso a imagem não carregue */
+  background-color: #000000;
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
   height: 100vh;
-  /* Garante que o fundo ocupe toda a altura da tela */
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  /* Garante que o conteúdo comece no topo */
-
-  /* Animação suave de zoom lento no background */
-  animation: backgroundZoom 20s ease-in-out infinite alternate;
+  animation: backgroundZoom 11s ease-in-out infinite alternate;
 }
 
 @keyframes backgroundZoom {
@@ -291,7 +283,6 @@ form .form-help :where(label, a) {
 
 .password-wrapper input {
   padding-right: 10px;
-  /* espaço maior para o ícone */
 }
 
 .eye-icon {

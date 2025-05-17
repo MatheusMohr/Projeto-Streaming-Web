@@ -1,0 +1,134 @@
+/* admin.css */
+
+body {
+    background: #0f0f0f;
+    color: #eee;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  }
+  
+  h1, h2, h3 {
+    color: #f11717;
+    margin-bottom: 15px;
+  }
+  
+  button {
+    background: #f11717;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  button:hover {
+    background: #d30f0f;
+  }
+  
+  form {
+    background: #212020;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 500px;
+    margin-bottom: 40px;
+    box-shadow: 0 0 15px rgba(241, 23, 23, 0.5);
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #f11717;
+  }
+  
+  input, textarea {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #444;
+    background: #1a1a1a;
+    color: #eee;
+    font-size: 14px;
+  }
+  
+  input:focus, textarea:focus {
+    outline: none;
+    border-color: #f11717;
+    background: #222;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    max-width: 900px;
+    margin-bottom: 40px;
+    box-shadow: 0 0 15px rgba(241, 23, 23, 0.5);
+    background: #212020;
+    color: #eee;
+    border-radius: 10px;
+  }
+  
+  th, td {
+    padding: 10px;
+    border-bottom: 1px solid #333;
+    text-align: left;
+  }
+  
+  th {
+    background: #2e2e2e;
+    color: #f11717;
+  }
+  
+  tr:hover {
+    background: #3a3a3a;
+  }
+  
+  .action-btn {
+    background: transparent;
+    border: none;
+    color: #f11717;
+    font-weight: 700;
+    cursor: pointer;
+    margin-right: 8px;
+    font-size: 14px;
+  }
+  
+  .action-btn:hover {
+    color: #d30f0f;
+  }
+  
+  #filme-lista li {
+    margin-bottom: 10px;
+    list-style: none;
+    font-weight: 600;
+  }
+  
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal.active {
+    display: flex;
+  }
+  
+  .modal-content {
+    background: #222;
+    color: #eee;
+    padding: 20px;
+    border-radius: 10px;
+    width: 320px;
+    position: relative;
+  }
+  
+  #cancel-edit {
+    margin-left: 10px;
+    background: #555;
+  }
+  

@@ -1,93 +1,124 @@
 const db = new PouchDB('movies');
 
-let editandoFilmeId = null; // se não for null, estamos editando
+let filmeEditando = null;
 
-// Salvar novo filme ou atualizar existente
-document.getElementById('add-movie-form').addEventListener('submit', async (e) => {
+const form = document.getElementById('add-movie-form');
+const btnSalvar = document.getElementById('btn-salvar');
+const btnCancelar = document.getElementById('btn-cancelar');
+const listaFilmes = document.getElementById('filme-lista');
+
+form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  const filme = {
-    titulo: document.getElementById('nome').value.trim(),
-    imagem: document.getElementById('imagem').value.trim(),
-    trailer: document.getElementById('trailer').value.trim(),
-    classificacao: document.getElementById('classificacao').value.trim(),
-    descricao: document.getElementById('descricao').value.trim(),
-    duracao: document.getElementById('duracao').value.trim(),
-    genero: document.getElementById('genero').value.trim(),
-    ano: document.getElementById('ano').value.trim(),
+  const filmeData = {
+    titulo: form.nome.value.trim(),
+    imagem: form.imagem.value.trim(),
+    trailer: form.trailer.value.trim(),
+    classificacao: form.classificacao.value.trim(),
+    descricao: form.descricao.value.trim(),
+    duracao: form.duracao.value.trim(),
+    genero: form.genero.value.trim(),
+    ano: form.ano.value.trim(),
   };
 
   try {
-    if (editandoFilmeId) {
-      // Edição
-      const doc = await db.get(editandoFilmeId);
-      await db.put({ ...doc, ...filme });
+    if (filmeEditando) {
+      filmeData._id = filmeEditando._id;
+      filmeData._rev = filmeEditando._rev;
+      await db.put(filmeData);
       alert('Filme atualizado com sucesso!');
-      editandoFilmeId = null;
+      filmeEditando = null;
+      btnSalvar.textContent = 'Adicionar Filme';
+      btnCancelar.style.display = 'none';
     } else {
-      // Novo
-      await db.put({ _id: new Date().toISOString(), ...filme });
+      filmeData._id = 'filme_' + Date.now();
+      await db.put(filmeData);
       alert('Filme adicionado com sucesso!');
     }
 
-    e.target.reset();
-    listarFilmes();
+    form.reset();
+    carregarFilmes();
   } catch (err) {
-    alert('Erro ao salvar filme: ' + err.message);
+    alert('Erro ao salvar filme: ' + err);
   }
 });
 
-// Listar filmes no painel admin
-async function listarFilmes() {
-  const lista = document.getElementById('filme-lista');
-  lista.innerHTML = '';
+btnCancelar.addEventListener('click', () => {
+  filmeEditando = null;
+  form.reset();
+  btnSalvar.textContent = 'Adicionar Filme';
+  btnCancelar.style.display = 'none';
+});
 
+async function carregarFilmes() {
+  listaFilmes.innerHTML = '';
   try {
     const result = await db.allDocs({ include_docs: true });
-
-    if (result.rows.length === 0) {
-      lista.innerHTML = '<li>Nenhum filme cadastrado.</li>';
-      return;
-    }
-
     result.rows.forEach(row => {
-      const filme = row.doc;
-      const li = document.createElement('li');
+      const f = row.doc;
+      if (f._id.startsWith('filme_')) {
+        const li = document.createElement('li');
 
-      li.innerHTML = `
-        <strong>${filme.titulo}</strong> (${filme.ano}) -
-        <button data-id="${filme._id}">Editar</button>
-      `;
+        // Texto do filme
+        const spanTitulo = document.createElement('span');
+        spanTitulo.textContent = `${f.titulo} (${f.ano}) - ${f.genero}`;
+        spanTitulo.style.marginRight = '15px';
 
-      li.querySelector('button').addEventListener('click', () => {
-        preencherFormularioParaEdicao(filme);
-      });
+        // Botão editar
+        const btnEditar = document.createElement('button');
+        btnEditar.textContent = 'Editar';
+        btnEditar.style.marginRight = '10px';
+        btnEditar.style.cursor = 'pointer';
+        btnEditar.addEventListener('click', () => {
+          filmeEditando = f;
+          preencherFormulario(f);
+          btnSalvar.textContent = 'Salvar Alterações';
+          btnCancelar.style.display = 'inline-block';
+        });
 
-      lista.appendChild(li);
+        // Botão excluir
+        const btnExcluir = document.createElement('button');
+        btnExcluir.textContent = 'Excluir';
+        btnExcluir.style.cursor = 'pointer';
+        btnExcluir.addEventListener('click', async (ev) => {
+          ev.stopPropagation();
+          if (confirm(`Deseja excluir o filme "${f.titulo}"?`)) {
+            try {
+              await db.remove(f);
+              alert('Filme excluído com sucesso!');
+              if (filmeEditando && filmeEditando._id === f._id) {
+                filmeEditando = null;
+                form.reset();
+                btnSalvar.textContent = 'Adicionar Filme';
+                btnCancelar.style.display = 'none';
+              }
+              carregarFilmes();
+            } catch (error) {
+              alert('Erro ao excluir filme: ' + error);
+            }
+          }
+        });
+
+        li.appendChild(spanTitulo);
+        li.appendChild(btnEditar);
+        li.appendChild(btnExcluir);
+        listaFilmes.appendChild(li);
+      }
     });
   } catch (err) {
-    console.error('Erro ao listar filmes:', err);
+    console.error('Erro ao carregar filmes:', err);
   }
 }
 
-// Preencher formulário com dados do filme para edição
-function preencherFormularioParaEdicao(filme) {
-  document.getElementById('nome').value = filme.titulo;
-  document.getElementById('imagem').value = filme.imagem;
-  document.getElementById('trailer').value = filme.trailer;
-  document.getElementById('classificacao').value = filme.classificacao;
-  document.getElementById('descricao').value = filme.descricao;
-  document.getElementById('duracao').value = filme.duracao;
-  document.getElementById('genero').value = filme.genero;
-  document.getElementById('ano').value = filme.ano;
-
-  editandoFilmeId = filme._id;
+function preencherFormulario(filme) {
+  form.nome.value = filme.titulo || '';
+  form.imagem.value = filme.imagem || '';
+  form.trailer.value = filme.trailer || '';
+  form.classificacao.value = filme.classificacao || '';
+  form.descricao.value = filme.descricao || '';
+  form.duracao.value = filme.duracao || '';
+  form.genero.value = filme.genero || '';
+  form.ano.value = filme.ano || '';
 }
 
-// Botão para ir à página de filmes
-document.getElementById('btn-ver-filmes').addEventListener('click', () => {
-  window.location.href = '../Html/filmes.html';
-});
-
-// Inicializar
-listarFilmes();
+document.addEventListener('DOMContentLoaded', carregarFilmes);
