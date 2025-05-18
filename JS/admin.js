@@ -1,20 +1,30 @@
-/* admin.js – seu código completo, só ajustando alguns nomes de campo ---- */
-const dbMovies = new PouchDB('movies');
-const dbUsers  = new PouchDB('mathflix-users');
+/* ===========================================================
+   BLOQUEIO DE ACESSO – só entra quem tem usuario_admin=true
+   =========================================================== */
+if (sessionStorage.getItem('usuario_admin') !== 'true') {
+  alert('Acesso restrito. Faça login como administrador.');
+  location.href = 'login.html'; // redireciona ao login
+  throw new Error('bloqueado');
+}
 
-let filmeEditando   = null;
+/* =================== BANCOS PouchDB ======================= */
+const dbMovies = new PouchDB('movies');
+const dbUsers = new PouchDB('mathflix-users');
+
+/* Variáveis de controle */
+let filmeEditando = null;
 let usuarioEditando = null;
 
 /* ------------ referências de elementos -------------------------------- */
-const formFilme   = document.getElementById('add-movie-form');
-const btnSalvarF  = document.getElementById('btn-salvar');
-const btnCancelF  = document.getElementById('btn-cancelar');
+const formFilme = document.getElementById('add-movie-form');
+const btnSalvarF = document.getElementById('btn-salvar');
+const btnCancelF = document.getElementById('btn-cancelar');
 const listaFilmes = document.getElementById('filme-lista');
 
-const tbody       = document.querySelector('#usuariosTable tbody');
-const formUser    = document.getElementById('user-form');
-const btnSalvarU  = document.getElementById('btn-save-user');
-const btnCancelU  = document.getElementById('btn-cancel-user');
+const tbody = document.querySelector('#usuariosTable tbody');
+const formUser = document.getElementById('user-form');
+const btnSalvarU = document.getElementById('btn-save-user');
+const btnCancelU = document.getElementById('btn-cancel-user');
 
 /* ---------- gerar novo _id sequencial p/ usuário ----------------------- */
 async function gerarNovoIdUsuario() {
@@ -23,6 +33,15 @@ async function gerarNovoIdUsuario() {
     .map(row => parseInt(row.id.split('_')[1] || -1, 10))
     .reduce((a, b) => Math.max(a, b), -1);
   return 'usuario_' + (max + 1);
+}
+
+/* ---------- Função para gerar hash SHA-256 da senha ------------------- */
+async function hashSenha(senha) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(senha);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
 /* ======================= CRUD DE FILMES =============================== */
@@ -42,7 +61,7 @@ formFilme.addEventListener('submit', async (e) => {
 
   try {
     if (filmeEditando) {
-      f._id  = filmeEditando._id;
+      f._id = filmeEditando._id;
       f._rev = filmeEditando._rev;
       await dbMovies.put(f);
       alert('Filme atualizado!');
@@ -111,7 +130,7 @@ function preencherFormFilme(f) {
 formUser.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  const nome  = formUser.nome.value.trim();
+  const nome = formUser.nome.value.trim();
   const email = formUser.email.value.trim().toLowerCase();
   const senha = formUser.senha.value;
   const admin = formUser.admin.checked;
@@ -122,20 +141,22 @@ formUser.addEventListener('submit', async (e) => {
   }
 
   try {
+    const allUsers = await dbUsers.allDocs({ include_docs: true });
+    // Verifica duplicidade de email, ignorando o usuário em edição
+    const dup = allUsers.rows.some(r => r.doc.email === email && r.doc._id !== (usuarioEditando?._id));
+
+    if (dup) {
+      alert('E-mail já cadastrado.');
+      return;
+    }
+
     if (usuarioEditando) {
-      // evitar duplicidade
-      const dup = await dbUsers.find ?
-        false :             // caso tenha plug-in find
-        (await dbUsers.allDocs({ include_docs: true }))
-          .rows.some(r => r.doc.email === email && r.doc._id !== usuarioEditando._id);
-
-      if (dup) {
-        alert('E-mail já cadastrado.');
-        return;
-      }
-
+      // Atualizar usuário existente
       Object.assign(usuarioEditando, { nome, email, admin });
-      if (senha) usuarioEditando.password = senha;
+
+      if (senha) {
+        usuarioEditando.password = await hashSenha(senha);
+      }
 
       await dbUsers.put(usuarioEditando);
       alert('Usuário atualizado!');
@@ -143,17 +164,15 @@ formUser.addEventListener('submit', async (e) => {
       btnSalvarU.textContent = 'Adicionar Usuário';
       btnCancelU.style.display = 'none';
     } else {
-      // novo usuário
-      const existe = (await dbUsers.allDocs({ include_docs: true }))
-        .rows.some(r => r.doc.email === email);
-      if (existe) {
-        alert('E-mail já cadastrado!');
-        return;
-      }
+      // Criar novo usuário
+      const senhaHash = await hashSenha(senha);
 
       const novo = {
         _id: await gerarNovoIdUsuario(),
-        nome, email, password: senha, admin
+        nome,
+        email,
+        password: senhaHash,
+        admin
       };
       await dbUsers.put(novo);
       alert('Usuário adicionado!');
@@ -193,7 +212,7 @@ async function carregarUsuarios() {
     edit.textContent = 'Editar';
     edit.addEventListener('click', () => {
       usuarioEditando = u;
-      formUser.nome.value  = u.nome;
+      formUser.nome.value = u.nome;
       formUser.email.value = u.email;
       formUser.senha.value = '';
       formUser.admin.checked = !!u.admin;

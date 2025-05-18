@@ -1,256 +1,228 @@
-  <!DOCTYPE html>
-  <html lang="pt-br">
-
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-    <title>MathCine</title>
-    <link rel="stylesheet" href="../Css/filmes.css" />
-    <script src="../JS/filmes.js" defer></script>
-    <link href="https://fonts.cdnfonts.com/css/netflix-font" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/pouchdb@7.3.0/dist/pouchdb.min.js"></script>
-  </head>
-
-  <body>
-    <header>
-      <div class="header-container">
-        <a href="index.html">
-          <img src="../Imagem/download.png" alt="Logo MathCine" style="cursor:pointer;" />
-        </a>
-        <div class="top-links">
-          <a href="ajuda.html" class="btn ajuda-link">Precisa de ajuda?</a>
-          <a href="contato.html" class="btn">Contato</a>
-          <a href="faq.html" class="btn">FAQ</a>
-          <a href="suporte.html" class="btn">Suporte</a>
-          <a href="index.html" class="btn">Sair</a>
-        </div>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>MathCine</title>
+  <link rel="stylesheet" href="../Css/filmes.css" />
+  <script src="../JS/filmes.js" type="module" defer></script>
+  <link href="https://fonts.cdnfonts.com/css/netflix-font" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/pouchdb@7.3.0/dist/pouchdb.min.js"></script>
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <a href="index.html">
+        <img src="../Imagem/download.png" alt="Logo MathCine" style="cursor:pointer;" />
+      </a>
+      <div class="top-links">
+        <a href="ajuda.html" class="btn ajuda-link">Precisa de ajuda?</a>
+        <a href="contato.html" class="btn">Contato</a>
+        <a href="faq.html" class="btn">FAQ</a>
+        <a href="suporte.html" class="btn">Suporte</a>
+        <a href="index.html" class="btn">Sair</a>
       </div>
-    </header>
-
-    <div class="search-container">
-      <label for="categoria">Filtrar por Categoria:</label>
-      <select id="categoria" onchange="filtrarFilmes()">
-        <option value="todas">Todas</option>
-        <option value="Ficção Científica">Ficção Científica</option>
-        <option value="Ação">Ação</option>
-        <option value="Drama">Drama</option>
-        <option value="Crime">Crime</option>
-        <option value="Romance">Romance</option>
-        <option value="Fantasia">Fantasia</option>
-        <option value="Suspense">Suspense</option>
-        <option value="Aventura">Aventura</option>
-      </select>
-      <input type="search" id="pesquisa" placeholder="Digite sua pesquisa..." />
     </div>
-
-    <div class="catalogo">
-
-      <div class="filme" data-genero="Aventura, Ficção Científica" data-classificacao="10 anos"
-        data-titulo="Jurassic Park"
-        data-descricao="Jurassic Park é um parque temático revolucionário onde cientistas clonam dinossauros a partir de DNA preservado, mas uma falha no sistema causa caos quando as criaturas escapam e ameaçam os visitantes.<br /><br /><strong>Classificação:</strong> 10 anos<br /><strong>Duração:</strong> 2h 7min<br /><strong>Gênero:</strong> Aventura, Ficção Científica<br /><strong>Ano:</strong> 1993"
-        data-video="https://www.youtube.com/embed/QWBKEmWWL38">
-        <img src="https://image.tmdb.org/t/p/w500/oU7Oq2kFAAlGqbU4VoAE36g4hoI.jpg" alt="Jurassic Park" />
-        <h3>Jurassic Park</h3>
-      </div>
-
-      <div class="filme" data-genero="Ação, Ficção Científica" data-classificacao="14 anos" data-titulo="Matrix"
-        data-descricao="Neo descobre que a realidade é uma simulação controlada por máquinas e junta-se a um grupo rebelde para lutar pela liberdade da humanidade.<br /><br /><strong>Classificação:</strong> 14 anos<br /><strong>Duração:</strong> 2h 16min<br /><strong>Gênero:</strong> Ação, Ficção Científica<br /><strong>Ano:</strong> 1999"
-        data-video="https://www.youtube.com/embed/vKQi3bBA1y8">
-        <img src="https://image.tmdb.org/t/p/w500/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg" alt="Matrix" />
-        <h3>Matrix</h3>
-      </div>
-
-      <div class="filme" data-genero="Aventura, Fantasia" data-classificacao="12 anos" data-titulo="O Senhor dos Anéis"
-        data-descricao="Frodo e seus companheiros embarcam em uma perigosa jornada para destruir um anel mágico com o poder de dominar a Terra Média.<br /><br /><strong>Classificação:</strong> 12 anos<br /><strong>Duração:</strong> 2h 58min<br /><strong>Gênero:</strong> Aventura, Fantasia<br /><strong>Ano:</strong> 2001"
-        data-video="https://www.youtube.com/embed/V75dMMIW2B4">
-        <img src="https://image.tmdb.org/t/p/w500/6oom5QYQ2yQTMJIbnvbkBL9cHo6.jpg" alt="O Senhor dos Anéis" />
-        <h3>O Senhor dos Anéis</h3>
-      </div>
-
-      <div class="filme" data-genero="Drama, Romance" data-classificacao="12 anos" data-titulo="Titanic"
-        data-descricao="Um romance inesquecível entre Jack e Rose, dois jovens de diferentes classes sociais que vivem uma paixão intensa a bordo do navio Titanic.<br /><br /><strong>Classificação:</strong> 12 anos<br /><strong>Duração:</strong> 3h 14min<br /><strong>Gênero:</strong> Drama, Romance<br /><strong>Ano:</strong> 1997"
-        data-video="https://www.youtube.com/embed/kVrqfYjkTdQ">
-        <img src="https://image.tmdb.org/t/p/w500/9xjZS2rlVxm8SFx8kPC3aIGCOYQ.jpg" alt="Titanic" />
-        <h3>Titanic</h3>
-      </div>
-
-      <div class="filme" data-genero="Ação, Aventura, Ficção Científica" data-classificacao="12 anos"
-        data-titulo="Vingadores: Ultimato"
-        data-descricao="Após a devastação causada por Thanos, os Vingadores unem forças para uma missão desesperada com o objetivo de restaurar o equilíbrio do universo.<br /><br /><strong>Classificação:</strong> 12 anos<br /><strong>Duração:</strong> 3h 2min<br /><strong>Gênero:</strong> Ação, Aventura, Ficção Científica<br /><strong>Ano:</strong> 2019"
-        data-video="https://www.youtube.com/embed/TcMBFSGVi1c">
-        <img src="https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9sl16pB3iy.jpg" alt="Vingadores: Ultimato" />
-        <h3>Vingadores: Ultimato</h3>
-      </div>
-
-      <div class="filme" data-genero="Ficção Científica, Drama" data-classificacao="12 anos" data-titulo="Interestelar"
-        data-descricao="Um grupo de astronautas viaja através de um buraco de minhoca em busca de um novo lar para a humanidade, enfrentando desafios científicos e emocionais.<br /><br /><strong>Classificação:</strong> 12 anos<br /><strong>Duração:</strong> 2h 49min<br /><strong>Gênero:</strong> Ficção Científica, Drama<br /><strong>Ano:</strong> 2014"
-        data-video="https://www.youtube.com/embed/zSWdZVtXT7E">
-        <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/nCbkOyOMTEwlEV0LtCOvCnwEONA.jpg"
-          alt="Interestelar" />
-        <h3>Interestelar</h3>
-      </div>
-
-      <div class="filme" data-genero="Drama, Suspense" data-classificacao="16 anos" data-titulo="Coringa"
-        data-descricao="Arthur Fleck, um comediante marginalizado, enfrenta a alienação e a loucura, transformando-se no icônico vilão Coringa, desencadeando o caos em Gotham.<br /><br /><strong>Classificação:</strong> 16 anos<br /><strong>Duração:</strong> 2h 2min<br /><strong>Gênero:</strong> Drama, Suspense<br /><strong>Ano:</strong> 2019"
-        data-video="https://www.youtube.com/embed/zAGVQLHvwOY">
-        <img src="https://image.tmdb.org/t/p/w500/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg" alt="Coringa" />
-        <h3>Coringa</h3>
-      </div>
-
-      <div class="filme" data-genero="Biografia, Comédia, Crime" data-classificacao="18 anos"
-        data-titulo="O Lobo de Wall Street"
-        data-descricao="A ascensão meteórica e a decadência moral de Jordan Belfort, um ambicioso corretor da bolsa envolvido em excessos, fraudes e crimes financeiros.<br /><br /><strong>Classificação:</strong> 18 anos<br /><strong>Duração:</strong> 3h<br /><strong>Gênero:</strong> Biografia, Comédia, Crime<br /><strong>Ano:</strong> 2013"
-        data-video="https://www.youtube.com/embed/iszwuX1AK6A">
-        <img src="https://image.tmdb.org/t/p/w500/aKuFiU82s5ISJpGZp7YkIr3kCUd.jpg" alt="O Lobo de Wall Street" />
-        <h3>O Lobo de Wall Street</h3>
-      </div>
-
-      <div class="filme" data-genero="Ficção Científica, Aventura" data-classificacao="14 anos" data-titulo="Duna"
-        data-descricao="Paul Atreides luta para proteger sua família e seu povo em Arrakis, um planeta desértico repleto de perigos políticos, místicos e traições.<br /><br /><strong>Classificação:</strong> 14 anos<br /><strong>Duração:</strong> 2h 35min<br /><strong>Gênero:</strong> Ficção Científica, Aventura<br /><strong>Ano:</strong> 2021"
-        data-video="https://www.youtube.com/embed/n9xhJrPXop4">
-        <img src="https://image.tmdb.org/t/p/w500/d5NXSklXo0qyIYkgV94XAgMIckC.jpg" alt="Duna" />
-        <h3>Duna</h3>
-      </div>
-
-      <div class="filme" data-genero="Ação, Aventura, Ficção Científica" data-classificacao="12 anos"
-        data-titulo="Avatar: O Caminho da Água"
-        data-descricao="Jake Sully e Neytiri enfrentam novas ameaças enquanto constroem sua família e defendem o planeta Pandora em uma aventura épica e emocionante.<br /><br /><strong>Classificação:</strong> 12 anos<br /><strong>Duração:</strong> 3h 12min<br /><strong>Gênero:</strong> Ação, Aventura, Ficção Científica<br /><strong>Ano:</strong> 2022"
-        data-video="https://www.youtube.com/embed/d9MyW72ELq0">
-        <img src="https://image.tmdb.org/t/p/w500/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg" alt="Avatar: O Caminho da Água" />
-        <h3>Avatar 2</h3>
-      </div>
-
-      <div class="filme" data-genero="Ação, Fantasia" data-classificacao="12 anos" data-titulo="Mulher-Maravilha 1984"
-        data-descricao="Diana Prince enfrenta desafios da Guerra Fria ao confrontar a União Soviética e a poderosa Mulher-Leopardo em uma missão que testa seus limites.<br /><br /><strong>Classificação:</strong> 12 anos<br /><strong>Duração:</strong> 2h 31min<br /><strong>Gênero:</strong> Ação, Aventura, Fantasia<br /><strong>Ano:</strong> 2020"
-        data-video="https://www.youtube.com/embed/sfM7_JLk-84">
-        <img src="https://image.tmdb.org/t/p/w500/8UlWHLMpgZm9bx6QYh0NFoq67TZ.jpg" alt="Mulher-Maravilha 1984" />
-        <h3>Mulher-Maravilha 1984</h3>
-      </div>
-
-      <div class="filme" data-genero="Ação, Aventura, Ficção Científica" data-classificacao="12 anos"
-        data-titulo="Vingadores: Guerra Infinita"
-        data-descricao="Os heróis mais poderosos da Terra enfrentam Thanos numa batalha épica para salvar o universo da destruição total.<br /><br /><strong>Classificação:</strong> 12 anos<br /><strong>Duração:</strong> 2h 29min<br /><strong>Gênero:</strong> Ação, Aventura, Ficção Científica<br /><strong>Ano:</strong> 2018"
-        data-video="https://www.youtube.com/embed/6ZfuNTqbHE8">
-        <img src="https://image.tmdb.org/t/p/w500/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg" alt="Vingadores: Guerra Infinita" />
-        <h3>Vingadores</h3>
-      </div>
-
-      <div class="filme" data-genero="Ação, Drama, História" data-classificacao="14 anos" data-titulo="Dunkirk"
-        data-descricao="Durante a Segunda Guerra Mundial, soldados aliados enfrentam cercos implacáveis enquanto tentam sobreviver a uma evacuação arriscada na praia de Dunquerque.<br /><br /><strong>Classificação:</strong> 14 anos<br /><strong>Duração:</strong> 1h 46min<br /><strong>Gênero:</strong> Ação, Drama, História<br /><strong>Ano:</strong> 2017"
-        data-video="https://www.youtube.com/embed/F-eMt3SrfFU">
-        <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/kO6ewhlh7OIGRRbHwylDafEM1QG.jpg" alt="Dunkirk" />
-        <h3>Dunkirk</h3>
-      </div>
-
-      <div class="filme" data-genero="Ficção Científica, Thriller" data-classificacao="12 anos" data-titulo="Gravidade"
-        data-descricao="Dois astronautas lutam para sobreviver no espaço após a destruição de sua nave espacial em órbita da Terra.<br /><br /><strong>Classificação:</strong> 12 anos<br /><strong>Duração:</strong> 1h 31min<br /><strong>Gênero:</strong> Ficção Científica, Thriller<br /><strong>Ano:</strong> 2013"
-        data-video="https://www.youtube.com/embed/OiTiKOy59o4">
-        <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/eHLufJ1bHy4PtEBJdPSTu4jIhZ0.jpg" alt="Gravidade" />
-        <h3>Gravidade</h3>
-      </div>
-
-      <div class="filme" data-genero="Drama" data-classificacao="18 anos" data-titulo="Clube da Luta"
-        data-descricao="Um homem insatisfeito cria um clube secreto de lutas que o leva a questionar as normas da sociedade consumista.<br /><br /><strong>Classificação:</strong> 18 anos<br /><strong>Duração:</strong> 2h 19min<br /><strong>Gênero:</strong> Drama<br /><strong>Ano:</strong> 1999"
-        data-video="https://www.youtube.com/embed/BdJKm16Co6M">
-        <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/r3pPehX4ik8NLYPpbDRAh0YRtMb.jpg"
-          alt="Clube da Luta" />
-        <h3>Clube da Luta</h3>
-      </div>
-
-      <div class="filme" data-genero="Ação, Aventura, Sci-Fi" data-classificacao="14 anos" data-titulo="Pantera Negra"
-        data-descricao="T'Challa retorna ao trono de Wakanda e enfrenta desafios para proteger seu povo, cultura e legado diante de novas ameaças.<br /><br /><strong>Classificação:</strong> 14 anos<br /><strong>Duração:</strong> 2h 14min<br /><strong>Gênero:</strong> Ação, Aventura, Ficção Científica<br /><strong>Ano:</strong> 2018"
-        data-video="https://www.youtube.com/embed/8ndhidEmUbI">
-        <img src="https://mr.comingsoon.it/imgdb/locandine/235x336/53715.jpg" alt="Pantera Negra" />
-        <h3>Pantera Negra</h3>
-      </div>
-
-      <div class="filme" data-genero="Drama, História" data-classificacao="14 anos" data-titulo="A Lista de Schindler"
-        data-descricao="A inspiradora história real de Oskar Schindler, que salvou centenas de judeus durante o Holocausto arriscando sua própria vida.<br /><br /><strong>Classificação:</strong> 14 anos<br /><strong>Duração:</strong> 3h 15min<br /><strong>Gênero:</strong> Drama, História<br /><strong>Ano:</strong> 1993"
-        data-video="https://www.youtube.com/embed/gG22XNhtnoY">
-        <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/c8Ass7acuOe4za6DhSattE359gr.jpg"
-          alt="A Lista de Schindler" />
-        <h3>A Lista de Schindler</h3>
-      </div>
-
-      <div class="filme" data-genero="Aventura, Drama" data-classificacao="14 anos" data-titulo="Gladiador"
-        data-descricao="Traído, um general romano se torna gladiador e luta por justiça e vingança na arena, enfrentando grandes desafios.<br /><br /><strong>Classificação:</strong> 14 anos<br /><strong>Duração:</strong> 2h 35min<br /><strong>Gênero:</strong> Aventura, Drama<br /><strong>Ano:</strong> 2000"
-        data-video="https://www.youtube.com/embed/owK1qxDselE">
-        <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/ty8TGRuvJLPUmAR1H1nRIsgwvim.jpg" alt="Gladiador" />
-        <h3>Gladiador</h3>
-      </div>
-
-      <div class="filme" data-genero="Ficção Científica, Ação" data-classificacao="14 anos" data-titulo="Mad Max: Estrada da Fúria"
-        data-descricao="Num mundo pós-apocalíptico, Max ajuda um grupo de mulheres a escapar de um tirano impiedoso, em perseguições de tirar o fôlego.<br /><br /><strong>Classificação:</strong> 14 anos<br /><strong>Duração:</strong> 2h<br /><strong>Gênero:</strong> Ficção Científica, Ação<br /><strong>Ano:</strong> 2015"
-        data-video="https://www.youtube.com/embed/hEJnMQG9ev8">
-        <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/8tZYtuWezp8JbcsvHYO0O46tFbo.jpg"
-          alt="Mad Max: Estrada da Fúria" />
-        <h3>Mad Max: Estrada da Fúria</h3>
-      </div>
-
-      <div class="filme" data-genero="Comédia, Ação" data-classificacao="14 anos" data-titulo="Deadpool"
-        data-descricao="Um ex-operativo ganha poderes de cura acelerada e enfrenta suas batalhas com muito humor e irreverência.<br /><br /><strong>Classificação:</strong> 14 anos<br /><strong>Duração:</strong> 1h 48min<br /><strong>Gênero:</strong> Comédia, Ação<br /><strong>Ano:</strong> 2016"
-        data-video="https://www.youtube.com/embed/ONHBaC-pfsk">
-        <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/fSRb7vyIP8rQpL0I47P3qUsEKX3.jpg" alt="Deadpool" />
-        <h3>Deadpool</h3>
-      </div>
-
-      <div class="filme" data-genero="Drama, Suspense" data-classificacao="16 anos" data-titulo="Seven"
-        data-descricao="Dois detetives perseguem um serial killer que comete crimes baseados nos sete pecados capitais, numa investigação tensa e impactante.<br /><br /><strong>Classificação:</strong> 16 anos<br /><strong>Duração:</strong> 2h 7min<br /><strong>Gênero:</strong> Drama, Suspense<br /><strong>Ano:</strong> 1995"
-        data-video="https://www.youtube.com/embed/znmZoVkCjpI">
-        <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/69Sns8WoET6CfaYlIkHbla4l7nC.jpg" alt="Seven" />
-        <h3>Seven</h3>
-      </div>
-
-      <div class="filme" data-genero="Animação, Aventura, Comédia" data-classificacao="Livre" data-titulo="Toy Story"
-        data-descricao="Brinquedos ganham vida quando humanos não estão por perto e vivem diversas aventuras divertidas e emocionantes.<br /><br /><strong>Classificação:</strong> Livre<br /><strong>Duração:</strong> 1h 21min<br /><strong>Gênero:</strong> Animação, Aventura, Comédia<br /><strong>Ano:</strong> 1995"
-        data-video="https://www.youtube.com/embed/KYz2wyBy3kc">
-        <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/uXDfjJbdP4ijW5hWSBrPrlKpxab.jpg" alt="Toy Story" />
-        <h3>Toy Story</h3>
-      </div>
-
-      <div class="filme" data-genero="Ação, Aventura, Ficção Científica" data-classificacao="14 anos" data-titulo="Spider-Man: No Way Home"
-        data-descricao="Peter Parker enfrenta as consequências de sua identidade revelada enquanto novas ameaças aparecem no multiverso, colocando tudo em risco.<br /><br /><strong>Classificação:</strong> 14 anos<br /><strong>Duração:</strong> 2h 28min<br /><strong>Gênero:</strong> Ação, Aventura, Ficção Científica<br /><strong>Ano:</strong> 2021"
-        data-video="https://www.youtube.com/embed/JfVOs4VSpmA">
-        <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/iQFcwSGbZXMkeyKrxbPnwnRo5fl.jpg" alt="Spider-Man: No Way Home" />
-        <h3>Spider-Man: No Way Home</h3>
-      </div>
-
-      <div class="filme" data-genero="Ação, Aventura, Ficção Científica" data-classificacao="12 anos" data-titulo="Top Gun: Maverick"
-        data-descricao="Pete 'Maverick' Mitchell retorna à ativa para treinar pilotos de elite em uma missão perigosa que desafia seus limites.<br /><br /><strong>Classificação:</strong> 12 anos<br /><strong>Duração:</strong> 2h 11min<br /><strong>Gênero:</strong> Ação, Aventura, Ficção Científica<br /><strong>Ano:</strong> 2022"
-        data-video="https://www.youtube.com/embed/giXco2jaZ_4">
-        <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/62HCnUTziyWcpDaBO2i1DX17ljH.jpg" alt="Top Gun: Maverick" />
-        <h3>Top Gun: Maverick</h3>
-      </div>
-
+  </header>
+  <div class="search-container">
+    <label for="categoria">Filtrar por Categoria:</label>
+    <select id="categoria" onchange="filtrarFilmes()">
+      <option value="todas">Todas</option>
+      <option value="Ficção Científica">Ficção Científica</option>
+      <option value="Ação">Ação</option>
+      <option value="Drama">Drama</option>
+      <option value="Crime">Crime</option>
+      <option value="Romance">Romance</option>
+      <option value="Fantasia">Fantasia</option>
+      <option value="Suspense">Suspense</option>
+      <option value="Aventura">Aventura</option>
+    </select>
+    <input type="search" id="pesquisa" placeholder="Digite sua pesquisa..." />
+  </div>
+  <div class="catalogo">
+    <div class="filme" data-genero="Aventura, Ficção Científica" data-classificacao="10 anos"
+      data-titulo="Jurassic Park"
+      data-descricao="Jurassic Park é um parque temático revolucionário onde cientistas clonam dinossauros a partir de DNA preservado, mas uma falha no sistema causa caos quando as criaturas escapam e ameaçam os visitantes.<br /><br /><strong>Classificação:</strong> 10 anos<br /><strong>Duração:</strong> 2h 7min<br /><strong>Gênero:</strong> Aventura, Ficção Científica<br /><strong>Ano:</strong> 1993"
+      data-video="https://www.youtube.com/embed/QWBKEmWWL38">
+      <img src="https://image.tmdb.org/t/p/w500/oU7Oq2kFAAlGqbU4VoAE36g4hoI.jpg" alt="Jurassic Park" />
+      <h3>Jurassic Park</h3>
     </div>
-
-    <div id="videoModal" class="modal" tabindex="-1" aria-modal="true" role="dialog" aria-labelledby="modalTitle">
-      <div class="modal-content" tabindex="0">
-        <div class="modal-header">
-          <h2 id="modalTitle"></h2>
-          <button type="button" class="close" aria-label="Fechar" onclick="closeModal()">&times;</button>
+    <div class="filme" data-genero="Ação, Ficção Científica" data-classificacao="14 anos" data-titulo="Matrix"
+      data-descricao="Neo descobre que a realidade é uma simulação controlada por máquinas e junta-se a um grupo rebelde para lutar pela liberdade da humanidade.<br /><br /><strong>Classificação:</strong> 14 anos<br /><strong>Duração:</strong> 2h 16min<br /><strong>Gênero:</strong> Ação, Ficção Científica<br /><strong>Ano:</strong> 1999"
+      data-video="https://www.youtube.com/embed/vKQi3bBA1y8">
+      <img src="https://image.tmdb.org/t/p/w500/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg" alt="Matrix" />
+      <h3>Matrix</h3>
+    </div>
+    <div class="filme" data-genero="Aventura, Fantasia" data-classificacao="12 anos" data-titulo="O Senhor dos Anéis"
+      data-descricao="Frodo e seus companheiros embarcam em uma perigosa jornada para destruir um anel mágico com o poder de dominar a Terra Média.<br /><br /><strong>Classificação:</strong> 12 anos<br /><strong>Duração:</strong> 2h 58min<br /><strong>Gênero:</strong> Aventura, Fantasia<br /><strong>Ano:</strong> 2001"
+      data-video="https://www.youtube.com/embed/V75dMMIW2B4">
+      <img src="https://image.tmdb.org/t/p/w500/6oom5QYQ2yQTMJIbnvbkBL9cHo6.jpg" alt="O Senhor dos Anéis" />
+      <h3>O Senhor dos Anéis</h3>
+    </div>
+    <div class="filme" data-genero="Drama, Romance" data-classificacao="12 anos" data-titulo="Titanic"
+      data-descricao="Um romance inesquecível entre Jack e Rose, dois jovens de diferentes classes sociais que vivem uma paixão intensa a bordo do navio Titanic.<br /><br /><strong>Classificação:</strong> 12 anos<br /><strong>Duração:</strong> 3h 14min<br /><strong>Gênero:</strong> Drama, Romance<br /><strong>Ano:</strong> 1997"
+      data-video="https://www.youtube.com/embed/kVrqfYjkTdQ">
+      <img src="https://image.tmdb.org/t/p/w500/9xjZS2rlVxm8SFx8kPC3aIGCOYQ.jpg" alt="Titanic" />
+      <h3>Titanic</h3>
+    </div>
+    <div class="filme" data-genero="Ação, Aventura, Ficção Científica" data-classificacao="12 anos"
+      data-titulo="Vingadores: Ultimato"
+      data-descricao="Após a devastação causada por Thanos, os Vingadores unem forças para uma missão desesperada com o objetivo de restaurar o equilíbrio do universo.<br /><br /><strong>Classificação:</strong> 12 anos<br /><strong>Duração:</strong> 3h 2min<br /><strong>Gênero:</strong> Ação, Aventura, Ficção Científica<br /><strong>Ano:</strong> 2019"
+      data-video="https://www.youtube.com/embed/TcMBFSGVi1c">
+      <img src="https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9sl16pB3iy.jpg" alt="Vingadores: Ultimato" />
+      <h3>Vingadores: Ultimato</h3>
+    </div>
+    <div class="filme" data-genero="Ficção Científica, Drama" data-classificacao="12 anos" data-titulo="Interestelar"
+      data-descricao="Um grupo de astronautas viaja através de um buraco de minhoca em busca de um novo lar para a humanidade, enfrentando desafios científicos e emocionais.<br /><br /><strong>Classificação:</strong> 12 anos<br /><strong>Duração:</strong> 2h 49min<br /><strong>Gênero:</strong> Ficção Científica, Drama<br /><strong>Ano:</strong> 2014"
+      data-video="https://www.youtube.com/embed/zSWdZVtXT7E">
+      <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/nCbkOyOMTEwlEV0LtCOvCnwEONA.jpg"
+        alt="Interestelar" />
+      <h3>Interestelar</h3>
+    </div>
+    <div class="filme" data-genero="Drama, Suspense" data-classificacao="16 anos" data-titulo="Coringa"
+      data-descricao="Arthur Fleck, um comediante marginalizado, enfrenta a alienação e a loucura, transformando-se no icônico vilão Coringa, desencadeando o caos em Gotham.<br /><br /><strong>Classificação:</strong> 16 anos<br /><strong>Duração:</strong> 2h 2min<br /><strong>Gênero:</strong> Drama, Suspense<br /><strong>Ano:</strong> 2019"
+      data-video="https://www.youtube.com/embed/zAGVQLHvwOY">
+      <img src="https://image.tmdb.org/t/p/w500/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg" alt="Coringa" />
+      <h3>Coringa</h3>
+    </div>
+    <div class="filme" data-genero="Biografia, Comédia, Crime" data-classificacao="18 anos"
+      data-titulo="O Lobo de Wall Street"
+      data-descricao="A ascensão meteórica e a decadência moral de Jordan Belfort, um ambicioso corretor da bolsa envolvido em excessos, fraudes e crimes financeiros.<br /><br /><strong>Classificação:</strong> 18 anos<br /><strong>Duração:</strong> 3h<br /><strong>Gênero:</strong> Biografia, Comédia, Crime<br /><strong>Ano:</strong> 2013"
+      data-video="https://www.youtube.com/embed/iszwuX1AK6A">
+      <img src="https://image.tmdb.org/t/p/w500/aKuFiU82s5ISJpGZp7YkIr3kCUd.jpg" alt="O Lobo de Wall Street" />
+      <h3>O Lobo de Wall Street</h3>
+    </div>
+    <div class="filme" data-genero="Ficção Científica, Aventura" data-classificacao="14 anos" data-titulo="Duna"
+      data-descricao="Paul Atreides luta para proteger sua família e seu povo em Arrakis, um planeta desértico repleto de perigos políticos, místicos e traições.<br /><br /><strong>Classificação:</strong> 14 anos<br /><strong>Duração:</strong> 2h 35min<br /><strong>Gênero:</strong> Ficção Científica, Aventura<br /><strong>Ano:</strong> 2021"
+      data-video="https://www.youtube.com/embed/n9xhJrPXop4">
+      <img src="https://image.tmdb.org/t/p/w500/d5NXSklXo0qyIYkgV94XAgMIckC.jpg" alt="Duna" />
+      <h3>Duna</h3>
+    </div>
+    <div class="filme" data-genero="Ação, Aventura, Ficção Científica" data-classificacao="12 anos"
+      data-titulo="Avatar: O Caminho da Água"
+      data-descricao="Jake Sully e Neytiri enfrentam novas ameaças enquanto constroem sua família e defendem o planeta Pandora em uma aventura épica e emocionante.<br /><br /><strong>Classificação:</strong> 12 anos<br /><strong>Duração:</strong> 3h 12min<br /><strong>Gênero:</strong> Ação, Aventura, Ficção Científica<br /><strong>Ano:</strong> 2022"
+      data-video="https://www.youtube.com/embed/d9MyW72ELq0">
+      <img src="https://image.tmdb.org/t/p/w500/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg" alt="Avatar: O Caminho da Água" />
+      <h3>Avatar 2</h3>
+    </div>
+    <div class="filme" data-genero="Ação, Fantasia" data-classificacao="12 anos" data-titulo="Mulher-Maravilha 1984"
+      data-descricao="Diana Prince enfrenta desafios da Guerra Fria ao confrontar a União Soviética e a poderosa Mulher-Leopardo em uma missão que testa seus limites.<br /><br /><strong>Classificação:</strong> 12 anos<br /><strong>Duração:</strong> 2h 31min<br /><strong>Gênero:</strong> Ação, Aventura, Fantasia<br /><strong>Ano:</strong> 2020"
+      data-video="https://www.youtube.com/embed/sfM7_JLk-84">
+      <img src="https://image.tmdb.org/t/p/w500/8UlWHLMpgZm9bx6QYh0NFoq67TZ.jpg" alt="Mulher-Maravilha 1984" />
+      <h3>Mulher-Maravilha 1984</h3>
+    </div>
+    <div class="filme" data-genero="Ação, Aventura, Ficção Científica" data-classificacao="12 anos"
+      data-titulo="Vingadores: Guerra Infinita"
+      data-descricao="Os heróis mais poderosos da Terra enfrentam Thanos numa batalha épica para salvar o universo da destruição total.<br /><br /><strong>Classificação:</strong> 12 anos<br /><strong>Duração:</strong> 2h 29min<br /><strong>Gênero:</strong> Ação, Aventura, Ficção Científica<br /><strong>Ano:</strong> 2018"
+      data-video="https://www.youtube.com/embed/6ZfuNTqbHE8">
+      <img src="https://image.tmdb.org/t/p/w500/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg" alt="Vingadores: Guerra Infinita" />
+      <h3>Vingadores</h3>
+    </div>
+    <div class="filme" data-genero="Ação, Drama, História" data-classificacao="14 anos" data-titulo="Dunkirk"
+      data-descricao="Durante a Segunda Guerra Mundial, soldados aliados enfrentam cercos implacáveis enquanto tentam sobreviver a uma evacuação arriscada na praia de Dunquerque.<br /><br /><strong>Classificação:</strong> 14 anos<br /><strong>Duração:</strong> 1h 46min<br /><strong>Gênero:</strong> Ação, Drama, História<br /><strong>Ano:</strong> 2017"
+      data-video="https://www.youtube.com/embed/F-eMt3SrfFU">
+      <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/kO6ewhlh7OIGRRbHwylDafEM1QG.jpg" alt="Dunkirk" />
+      <h3>Dunkirk</h3>
+    </div>
+    <div class="filme" data-genero="Ficção Científica, Thriller" data-classificacao="12 anos" data-titulo="Gravidade"
+      data-descricao="Dois astronautas lutam para sobreviver no espaço após a destruição de sua nave espacial em órbita da Terra.<br /><br /><strong>Classificação:</strong> 12 anos<br /><strong>Duração:</strong> 1h 31min<br /><strong>Gênero:</strong> Ficção Científica, Thriller<br /><strong>Ano:</strong> 2013"
+      data-video="https://www.youtube.com/embed/OiTiKOy59o4">
+      <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/eHLufJ1bHy4PtEBJdPSTu4jIhZ0.jpg" alt="Gravidade" />
+      <h3>Gravidade</h3>
+    </div>
+    <div class="filme" data-genero="Drama" data-classificacao="18 anos" data-titulo="Clube da Luta"
+      data-descricao="Um homem insatisfeito cria um clube secreto de lutas que o leva a questionar as normas da sociedade consumista.<br /><br /><strong>Classificação:</strong> 18 anos<br /><strong>Duração:</strong> 2h 19min<br /><strong>Gênero:</strong> Drama<br /><strong>Ano:</strong> 1999"
+      data-video="https://www.youtube.com/embed/BdJKm16Co6M">
+      <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/r3pPehX4ik8NLYPpbDRAh0YRtMb.jpg"
+        alt="Clube da Luta" />
+      <h3>Clube da Luta</h3>
+    </div>
+    <div class="filme" data-genero="Ação, Aventura, Sci-Fi" data-classificacao="14 anos" data-titulo="Pantera Negra"
+      data-descricao="T'Challa retorna ao trono de Wakanda e enfrenta desafios para proteger seu povo, cultura e legado diante de novas ameaças.<br /><br /><strong>Classificação:</strong> 14 anos<br /><strong>Duração:</strong> 2h 14min<br /><strong>Gênero:</strong> Ação, Aventura, Ficção Científica<br /><strong>Ano:</strong> 2018"
+      data-video="https://www.youtube.com/embed/8ndhidEmUbI">
+      <img src="https://mr.comingsoon.it/imgdb/locandine/235x336/53715.jpg" alt="Pantera Negra" />
+      <h3>Pantera Negra</h3>
+    </div>
+    <div class="filme" data-genero="Drama, História" data-classificacao="14 anos" data-titulo="A Lista de Schindler"
+      data-descricao="A inspiradora história real de Oskar Schindler, que salvou centenas de judeus durante o Holocausto arriscando sua própria vida.<br /><br /><strong>Classificação:</strong> 14 anos<br /><strong>Duração:</strong> 3h 15min<br /><strong>Gênero:</strong> Drama, História<br /><strong>Ano:</strong> 1993"
+      data-video="https://www.youtube.com/embed/gG22XNhtnoY">
+      <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/c8Ass7acuOe4za6DhSattE359gr.jpg"
+        alt="A Lista de Schindler" />
+      <h3>A Lista de Schindler</h3>
+    </div>
+    <div class="filme" data-genero="Aventura, Drama" data-classificacao="14 anos" data-titulo="Gladiador"
+      data-descricao="Traído, um general romano se torna gladiador e luta por justiça e vingança na arena, enfrentando grandes desafios.<br /><br /><strong>Classificação:</strong> 14 anos<br /><strong>Duração:</strong> 2h 35min<br /><strong>Gênero:</strong> Aventura, Drama<br /><strong>Ano:</strong> 2000"
+      data-video="https://www.youtube.com/embed/owK1qxDselE">
+      <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/ty8TGRuvJLPUmAR1H1nRIsgwvim.jpg" alt="Gladiador" />
+      <h3>Gladiador</h3>
+    </div>
+    <div class="filme" data-genero="Ficção Científica, Ação" data-classificacao="14 anos"
+      data-titulo="Mad Max: Estrada da Fúria"
+      data-descricao="Num mundo pós-apocalíptico, Max ajuda um grupo de mulheres a escapar de um tirano impiedoso, em perseguições de tirar o fôlego.<br /><br /><strong>Classificação:</strong> 14 anos<br /><strong>Duração:</strong> 2h<br /><strong>Gênero:</strong> Ficção Científica, Ação<br /><strong>Ano:</strong> 2015"
+      data-video="https://www.youtube.com/embed/hEJnMQG9ev8">
+      <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/8tZYtuWezp8JbcsvHYO0O46tFbo.jpg"
+        alt="Mad Max: Estrada da Fúria" />
+      <h3>Mad Max: Estrada da Fúria</h3>
+    </div>
+    <div class="filme" data-genero="Comédia, Ação" data-classificacao="14 anos" data-titulo="Deadpool"
+      data-descricao="Um ex-operativo ganha poderes de cura acelerada e enfrenta suas batalhas com muito humor e irreverência.<br /><br /><strong>Classificação:</strong> 14 anos<br /><strong>Duração:</strong> 1h 48min<br /><strong>Gênero:</strong> Comédia, Ação<br /><strong>Ano:</strong> 2016"
+      data-video="https://www.youtube.com/embed/ONHBaC-pfsk">
+      <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/fSRb7vyIP8rQpL0I47P3qUsEKX3.jpg" alt="Deadpool" />
+      <h3>Deadpool</h3>
+    </div>
+    <div class="filme" data-genero="Drama, Suspense" data-classificacao="16 anos" data-titulo="Seven"
+      data-descricao="Dois detetives perseguem um serial killer que comete crimes baseados nos sete pecados capitais, numa investigação tensa e impactante.<br /><br /><strong>Classificação:</strong> 16 anos<br /><strong>Duração:</strong> 2h 7min<br /><strong>Gênero:</strong> Drama, Suspense<br /><strong>Ano:</strong> 1995"
+      data-video="https://www.youtube.com/embed/znmZoVkCjpI">
+      <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/69Sns8WoET6CfaYlIkHbla4l7nC.jpg" alt="Seven" />
+      <h3>Seven</h3>
+    </div>
+    <div class="filme" data-genero="Animação, Aventura, Comédia" data-classificacao="Livre" data-titulo="Toy Story"
+      data-descricao="Brinquedos ganham vida quando humanos não estão por perto e vivem diversas aventuras divertidas e emocionantes.<br /><br /><strong>Classificação:</strong> Livre<br /><strong>Duração:</strong> 1h 21min<br /><strong>Gênero:</strong> Animação, Aventura, Comédia<br /><strong>Ano:</strong> 1995"
+      data-video="https://www.youtube.com/embed/KYz2wyBy3kc">
+      <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/uXDfjJbdP4ijW5hWSBrPrlKpxab.jpg" alt="Toy Story" />
+      <h3>Toy Story</h3>
+    </div>
+    <div class="filme" data-genero="Ação, Aventura, Ficção Científica" data-classificacao="14 anos"
+      data-titulo="Spider-Man: No Way Home"
+      data-descricao="Peter Parker enfrenta as consequências de sua identidade revelada enquanto novas ameaças aparecem no multiverso, colocando tudo em risco.<br /><br /><strong>Classificação:</strong> 14 anos<br /><strong>Duração:</strong> 2h 28min<br /><strong>Gênero:</strong> Ação, Aventura, Ficção Científica<br /><strong>Ano:</strong> 2021"
+      data-video="https://www.youtube.com/embed/JfVOs4VSpmA">
+      <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/iQFcwSGbZXMkeyKrxbPnwnRo5fl.jpg"
+        alt="Spider-Man: No Way Home" />
+      <h3>Spider-Man: No Way Home</h3>
+    </div>
+    <div class="filme" data-genero="Ação, Aventura, Ficção Científica" data-classificacao="12 anos"
+      data-titulo="Top Gun: Maverick"
+      data-descricao="Pete 'Maverick' Mitchell retorna à ativa para treinar pilotos de elite em uma missão perigosa que desafia seus limites.<br /><br /><strong>Classificação:</strong> 12 anos<br /><strong>Duração:</strong> 2h 11min<br /><strong>Gênero:</strong> Ação, Aventura, Ficção Científica<br /><strong>Ano:</strong> 2022"
+      data-video="https://www.youtube.com/embed/giXco2jaZ_4">
+      <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/62HCnUTziyWcpDaBO2i1DX17ljH.jpg"
+        alt="Top Gun: Maverick" />
+      <h3>Top Gun: Maverick</h3>
+    </div>
+  </div>
+  <div id="videoModal" class="modal" tabindex="-1" aria-modal="true" role="dialog" aria-labelledby="modalTitle">
+    <div class="modal-content" tabindex="0">
+      <div class="modal-header">
+        <h2 id="modalTitle"></h2>
+        <button type="button" class="close" aria-label="Fechar" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-video">
+          <iframe id="videoIframe" frameborder="0" allowfullscreen title="Vídeo do filme"></iframe>
         </div>
-        <div class="modal-body">
-          <div class="modal-video">
-            <iframe id="videoIframe" frameborder="0" allowfullscreen title="Vídeo do filme"></iframe>
-          </div>
-          <div class="modal-description">
-            <p id="modalDescription"></p>
-          </div>
+        <div class="modal-description">
+          <p id="modalDescription"></p>
         </div>
       </div>
     </div>
-    <div class="">
+  </div>
     <footer class="fixarRodape">
       <p>&copy; <span id="anoAtual"></span> MATHFlix</p>
+      <a href="admin.html" class="btn gerenciar">Gerenciar Filmes</a>
     </footer>
-    </div>
-
-    <script>
-      document.getElementById("anoAtual").textContent = new Date().getFullYear();
-    </script>
-  </body>
-
-  </html>
+  <script>
+    document.getElementById("anoAtual").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

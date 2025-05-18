@@ -1,7 +1,5 @@
-/* cadastro.js ----------------------------------------------------------- */
 const dbUsers = new PouchDB('mathflix-users');
 
-/* ---------- util: gerar novo _id sequencial --------------------------- */
 async function gerarNovoIdUsuario() {
   const r = await dbUsers.allDocs({ startkey: 'usuario_', endkey: 'usuario_\ufff0' });
   const max = r.rows
@@ -10,9 +8,17 @@ async function gerarNovoIdUsuario() {
   return 'usuario_' + (max + 1);
 }
 
-/* ---------- alternar visibilidade da senha --------------------------- */
+// Função para gerar hash SHA-256
+async function hashSenha(senha) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(senha);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
 (() => {
-  const btn  = document.getElementById('toggle-password');
+  const btn = document.getElementById('toggle-password');
   const pass = document.getElementById('password');
 
   const eyeOpen = `
@@ -38,32 +44,40 @@ async function gerarNovoIdUsuario() {
   });
 })();
 
-/* ---------- submit do formulário ------------------------------------- */
 document.getElementById('register-form').addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  const nome  = document.getElementById('nome').value.trim();
+  const nome = document.getElementById('nome').value.trim();
   const email = document.getElementById('email').value.trim().toLowerCase();
-  const pass  = document.getElementById('password').value;
+  const pass = document.getElementById('password').value;
 
   if (!nome || !email || !pass) {
     alert('Preencha todos os campos!');
     return;
   }
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    alert('Digite um e-mail válido!');
+    return;
+  }
+  if (pass.length < 6) {
+    alert('A senha deve ter no mínimo 6 caracteres!');
+    return;
+  }
 
   try {
-    /* verifica e-mail duplicado */
     const all = await dbUsers.allDocs({ include_docs: true });
     if (all.rows.some(r => r.doc.email === email)) {
       alert('E-mail já cadastrado!');
       return;
     }
+    const senhaHash = await hashSenha(pass);
 
     const user = {
       _id: await gerarNovoIdUsuario(),
       nome,
       email,
-      password: pass,
+      password: senhaHash,
       admin: false
     };
 

@@ -647,7 +647,7 @@ select#categoria:focus {
 /* =============== FOOTER ========================== */
 .fixarRodape {
   position: relative;
-  margin: 0 ;
+  margin: 0;
   background-color: #141414;
   padding: 12px 0;
   text-align: center;

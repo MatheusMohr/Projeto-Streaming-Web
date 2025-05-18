@@ -127,17 +127,18 @@
       padding: 5px 10px;
       justify-items: center;
       margin: 5px auto 60px;
-      max-width: 100%; /* aumentei para ficar mais largo colado nas bordas */
+      max-width: 100%;
+      /* aumentei para ficar mais largo colado nas bordas */
     }
 
     @media screen and (max-width: 1024px) {
-      .catalogo { 
+      .catalogo {
         grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
         gap: 12px;
       }
     }
 
-    @media (max-width: 768px) { 
+    @media (max-width: 768px) {
       .catalogo {
         grid-template-columns: 1fr 1fr;
         gap: 12px;
@@ -242,7 +243,6 @@
       color: var(--accent);
     }
 
-    /* =============== FOOTER ========================== */
     .fixarRodape {
       background-color: #141414;
       padding: 12px 0;
@@ -251,7 +251,6 @@
       font-size: 0.9rem;
       border-top: 1px solid #333;
     }
-
   </style>
 </head>
 
@@ -300,14 +299,12 @@
 
     <div class="filme" tabindex="0" data-titulo="Vingadores: Ultimato"
       data-sinopse="Após a devastação causada por Thanos, os Vingadores unem forças para uma missão desesperada com o objetivo de restaurar o equilíbrio do universo."
-      data-classificacao="12 anos" data-duracao="3h 2min" data-genero="Ação, Aventura, Ficção Científica" data-ano="2019">
+      data-classificacao="12 anos" data-duracao="3h 2min" data-genero="Ação, Aventura, Ficção Científica"
+      data-ano="2019">
       <img src="https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9sl16pB3iy.jpg" alt="Vingadores: Ultimato" />
       <h3>Vingadores: Ultimato</h3>
       <div class="descricao-abaixo"></div>
     </div>
-
-    <!-- Adicione os demais filmes aqui seguindo o padrão -->
-
   </div>
 
   <footer class="fixarRodape">

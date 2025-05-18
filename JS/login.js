@@ -1,28 +1,18 @@
-/* login.js -------------------------------------------------------------- */
-/*  Fluxo idêntico ao script original:
-    – Admin hard-coded
-    – Busca de usuário por e-mail no PouchDB “mathflix-users”
-    – Flags em sessionStorage
-    – Checkbox “Lembrar de mim”
-    – Botão mostrar/ocultar senha                                      */
-
 (() => {
-  /* ---------- Configurações ------------------------------------------- */
-  const DB_NAME        = 'mathflix-users';
-  const ADMIN_EMAIL    = 'admin@mathcine.com';
-  const ADMIN_PASSWORD = 'admin';            // troque em produção
-  const REMEMBER_KEY   = 'mathcine_last_email';
+  const DB_NAME = 'mathflix-users';
+  const ADMIN_EMAIL = 'admin@mathcine.com';
+  // hash SHA-256 da senha 'admin'
+  const ADMIN_PASSWORD_HASH = '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918';
+  const REMEMBER_KEY = 'mathcine_last_email';
 
   const db = new PouchDB(DB_NAME);
 
-  /* ---------- Elementos de UI ----------------------------------------- */
-  const form        = document.getElementById('login-form');
-  const emailInput  = document.getElementById('login-email');
-  const passInput   = document.getElementById('login-password');
+  const form = document.getElementById('login-form');
+  const emailInput = document.getElementById('login-email');
+  const passInput = document.getElementById('login-password');
   const rememberChk = document.getElementById('remember-me');
-  const eyeBtn      = document.getElementById('toggle-password');
+  const eyeBtn = document.getElementById('toggle-password');
 
-  /* ---------- SVGs para o botão “olho” -------------------------------- */
   const eyeOpen = `
     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
          viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -45,36 +35,52 @@
     eyeBtn.innerHTML = hidden ? eyeClosed : eyeOpen;
   });
 
-  /* ---------- Pré-preencher e-mail se “lembrar” ----------------------- */
+  // Hash SHA-256 da senha digitada
+  async function hashSenha(senha) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(senha);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  // Preenche email salvo
   const savedEmail = localStorage.getItem(REMEMBER_KEY);
   if (savedEmail) {
     emailInput.value = savedEmail;
     rememberChk.checked = true;
   }
 
-  /* ---------- Submit do formulário ------------------------------------ */
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const email = emailInput.value.trim().toLowerCase();
-    const pwd   = passInput.value;
+    const pwd = passInput.value;
 
-    /* 1) Admin hard-coded ---------------------------------------------- */
-    if (email === ADMIN_EMAIL && pwd === ADMIN_PASSWORD) {
-      finishLogin({ email, admin: true });
-      return;
+    // Login admin com hash
+    if (email === ADMIN_EMAIL) {
+      const hashedPwd = await hashSenha(pwd);
+      if (hashedPwd === ADMIN_PASSWORD_HASH) {
+        finishLogin({ email, admin: true });
+        return;
+      } else {
+        alert('Senha incorreta!');
+        return;
+      }
     }
 
-    /* 2) Usuário comum -------------------------------------------------- */
+    // Usuário comum
     try {
       const result = await db.allDocs({ include_docs: true });
-      const user   = result.rows.find(r => r.doc.email === email)?.doc;
+      const user = result.rows.find(r => r.doc.email === email)?.doc;
 
       if (!user) {
         alert('Usuário não encontrado!');
         return;
       }
-      if (user.password !== pwd) {
+
+      const hashedPwd = await hashSenha(pwd);
+      if (user.password !== hashedPwd) {
         alert('Senha incorreta!');
         return;
       }
@@ -86,7 +92,6 @@
     }
   });
 
-  /* ---------- Finaliza login + redireciona ---------------------------- */
   function finishLogin({ email, admin }) {
     alert('Login realizado com sucesso!');
     sessionStorage.setItem('usuario_logado', email);

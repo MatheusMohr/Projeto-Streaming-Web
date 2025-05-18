@@ -1,7 +1,7 @@
 const db = new PouchDB('movies');
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Função para abrir modal
+
   function openModal(title, description, videoUrl) {
     document.getElementById('modalTitle').innerHTML = title;
     document.getElementById('modalDescription').innerHTML = description;
@@ -13,26 +13,22 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.classList.add('no-scroll');
   }
 
-  // Função para fechar modal
   function closeModal() {
     const modal = document.getElementById('videoModal');
     modal.classList.remove('show');
-    document.getElementById('videoIframe').src = ''; // para parar vídeo
+    document.getElementById('videoIframe').src = '';
     document.body.classList.remove('no-scroll');
   }
 
-  // Expor funções para HTML (botão fechar do modal usa closeModal)
   window.openModal = openModal;
   window.closeModal = closeModal;
 
-  // Fechar modal ao apertar ESC
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
       closeModal();
     }
   });
 
-  // Tornar cards fixos clicáveis para abrir modal
   function setupFilmesFixos() {
     document.querySelectorAll('.filme').forEach(card => {
       card.style.cursor = 'pointer';
@@ -42,7 +38,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Filtrar filmes por categoria
   function filtrarFilmes() {
     const categoriaSelecionada = document.getElementById('categoria').value;
     const filmes = document.querySelectorAll('.filme');
@@ -54,7 +49,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   window.filtrarFilmes = filtrarFilmes;
 
-  // Pesquisa em tempo real
   function setupPesquisa() {
     const campoPesquisa = document.getElementById('pesquisa');
     campoPesquisa.addEventListener('input', () => {
@@ -69,7 +63,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Embaralhar os cards da grid
   function embaralharCatalogo() {
     const catalogos = document.querySelectorAll(".catalogo");
     catalogos.forEach(catalogo => {
@@ -83,7 +76,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Controlar header show/hide ao scroll
   function setupHeaderScroll() {
     let prevScrollPos = window.scrollY;
     const header = document.querySelector("header");
@@ -99,7 +91,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Função para carregar filmes adicionados do PouchDB
   async function carregarFilmesAdicionados() {
     try {
       const result = await db.allDocs({ include_docs: true });
@@ -137,7 +128,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Ordem das chamadas para garantir tudo funciona direitinho
   (async function iniciar() {
     setupFilmesFixos();
     setupPesquisa();
@@ -145,5 +135,4 @@ document.addEventListener("DOMContentLoaded", () => {
     await carregarFilmesAdicionados();
     embaralharCatalogo();
   })();
-
 });

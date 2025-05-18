@@ -297,8 +297,6 @@ form .form-help :where(label, a) {
   width: 10px;
   height: 10px;
   z-index: 2;
-
-  /* Transição suave da cor no hover */
   transition: color 0.3s ease;
 }
 

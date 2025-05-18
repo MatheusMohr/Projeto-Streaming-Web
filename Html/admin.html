@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -8,11 +9,24 @@
   <script src="https://cdn.jsdelivr.net/npm/pouchdb@7.3.0/dist/pouchdb.min.js"></script>
   <script src="../JS/admin.js" defer></script>
 </head>
+
+<script>
+  if (sessionStorage.getItem('usuario_admin') !== 'true') {
+    alert('Acesso restrito: você precisa ser administrador para acessar!');
+    location.href = 'filmes.html';
+  }
+</script>
+
 <body>
   <header>
-    <a href="../Html/filmes.html">Acessar Catalogo</a>
-    <a href="../Html/index.html">Voltar ao menu</a>
-    <h1>Administração MathCine</h1>
+    <div class="header-container">
+      <img src="../Imagem/download.png" alt="Logo" />
+      <h1>Administração MathCine</h1>
+      <div class="top-links">
+        <a href="../Html/filmes.html" class="btn catalogo">Acessar Catalogo</a>
+        <a href="../Html/index.html" class="btn menu">Voltar ao menu</a>
+      </div>
+    </div>
   </header>
 
   <main id="admin-container">
@@ -26,7 +40,7 @@
         <label>URL da Imagem (capa):</label>
         <input type="url" name="imagem" required />
 
-        <label>URL do Trailer (embed YouTube):</label>
+        <label>URL do Trailer (https://youtube.com/embed/):</label>
         <input type="url" name="trailer" required />
 
         <label>Classificação Indicativa:</label>
@@ -54,7 +68,6 @@
       <ul id="filme-lista"></ul>
     </section>
 
-    <!-- Coluna usuários -->
     <section id="users-section">
       <h2>Adicionar / Editar Usuário</h2>
       <form id="user-form">
@@ -89,7 +102,7 @@
         <tbody></tbody>
       </table>
     </section>
-
   </main>
 </body>
+
 </html>

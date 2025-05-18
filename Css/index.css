@@ -1,59 +1,59 @@
-body, header {
+body,
+header {
   font-family: 'Roboto', sans-serif;
   background-color: #272727;
 }
 
-/* Estilos para o cabeçalho */
 header {
-    background: linear-gradient(25deg, #000000, #272727);
-    padding: 5px 10px;
-    margin: 0;
-    border-radius: 0px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    z-index: 1000;
-    overflow: hidden;
+  background: linear-gradient(25deg, #000000, #272727);
+  padding: 5px 10px;
+  margin: 0;
+  border-radius: 0px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
+  overflow: hidden;
 }
 
 .header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 header img {
-    width: 70px;
-    object-fit: contain;
+  width: 70px;
+  object-fit: contain;
 }
 
 .top-links {
-    display: flex;
-    justify-content: right;
-    gap: 10px;
-    padding: 10px 15px;
-    width: 100%;
-    margin-left: 0px;
-    margin-right: 20px;
-    overflow-x: hidden;
+  display: flex;
+  justify-content: right;
+  gap: 10px;
+  padding: 10px 15px;
+  width: 100%;
+  margin-left: 0px;
+  margin-right: 20px;
+  overflow-x: hidden;
 }
 
 .top-links .btn {
-    font-family: 'Montserrat', sans-serif;
-    padding: 10px 20px;
-    color: rgb(224, 224, 224);
-    text-decoration: none;
-    border-radius: 80px;
-    font-size: 18px;
-    font-weight: 600;
-    transition: background-color 0.3s ease;
+  font-family: 'Montserrat', sans-serif;
+  padding: 10px 20px;
+  color: rgb(224, 224, 224);
+  text-decoration: none;
+  border-radius: 80px;
+  font-size: 18px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
 }
 
 .top-links .btn:hover {
-    background-color: #3d3d3d;
+  background-color: #3d3d3d;
 }
 
 
@@ -70,7 +70,7 @@ header img {
   margin-bottom: 0.3rem;
   letter-spacing: 1px;
   text-transform: uppercase;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
   animation: fadeInDown 1s ease forwards;
 }
 
@@ -97,12 +97,12 @@ header img {
   width: 80px;
   height: 120px;
   border-radius: 6px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .intro-thumbnails img:hover {
-  box-shadow: 0 6px 15px rgba(0,0,0,0.35);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.35);
 }
 
 /* Animações */
@@ -112,6 +112,7 @@ header img {
     opacity: 0;
     transform: translateY(-20px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -123,6 +124,7 @@ header img {
     opacity: 0;
     transform: translateY(20px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
