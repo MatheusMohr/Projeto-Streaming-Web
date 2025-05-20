@@ -1,3 +1,28 @@
+/* =============== RESET E VARIÁVEIS =============== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-bg: #000000;
+  --secondary-bg: #212020;
+  --terceary-bg: #2e2e2e;
+  --accent: #f11717fb;
+  --accent-hover: #d31818;
+  --text-color: #ffffff;
+  --subtext-color: #cccccc;
+  --header-gradient: linear-gradient(
+    25deg,
+    var(--primary-bg),
+    var(--primary-bg),
+    var(--primary-bg),
+    var(--secondary-bg),
+    var(--secondary-bg)
+  );
+}
+
 body {
   background-image: url('https://w.wallhaven.cc/full/0w/wallhaven-0w2de6.jpg');
   background-position: center center;
@@ -27,11 +52,10 @@ body {
 
 /* Estilos para o cabeçalho */
 header {
-  background: linear-gradient(25deg, #000000, #272727);
+  background: var(--header-gradient);
   padding: 5px 10px;
   margin: 0;
   border-radius: 0px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   position: fixed;
   top: 0;
   left: 0;
@@ -39,8 +63,6 @@ header {
   width: 100%;
   z-index: 1000;
   overflow: hidden;
-
-  /* Fade in e slide do topo */
   animation: slideDownFadeIn 1s ease forwards;
 }
 
@@ -69,51 +91,29 @@ header img {
 
 .top-links {
   display: flex;
-  justify-content: right;
-  gap: 10px;
+  justify-content: center;
+  gap: 20px;
   padding: 10px 15px;
   width: 100%;
-  margin-left: 0px;
-  margin-right: 10px;
+  margin-left: -60px;
+  margin-right: 0px;
   overflow-x: hidden;
 }
 
 .top-links .btn {
   font-family: 'Montserrat', sans-serif;
-  padding: 9px 20px;
-  color: rgb(255, 255, 255);
+  padding: 10px 20px;
+  color: rgb(224, 224, 224);
   text-decoration: none;
   border-radius: 80px;
   font-size: 18px;
+  font-weight: 400;
   transition: background-color 0.3s ease;
 }
 
 .top-links .btn:hover {
-  background-color: #3d3d3d;
-}
-
-@keyframes pulseBtn {
-
-  0%,
-  100% {
-    box-shadow: 0 0 8px 0 rgba(255, 255, 255, 0.6);
-  }
-
-  50% {
-    box-shadow: 0 0 20px 6px rgba(255, 255, 255, 0.9);
-  }
-}
-
-.ajuda-link {
-  color: #fa1c1c;
-  text-decoration: none;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Roboto", sans-serif;
+   box-shadow: 0 0 0 3px rgba(241, 23, 23, 0.74);
+   background-color: var(--secondary-bg);
 }
 
 body::before {
@@ -126,17 +126,6 @@ body::before {
   background: url("");
   background-position: center;
 }
-
-nav {
-  position: fixed;
-  padding: 25px 60px;
-  z-index: 1;
-}
-
-nav a img {
-  width: 167px;
-}
-
 .form-wrapper {
   position: absolute;
   left: 50%;
@@ -163,7 +152,7 @@ nav a img {
 }
 
 .form-wrapper h2 {
-  color: #fff;
+  color: var(--text-color);
   font-size: 2rem;
 
   animation: slideLeftFadeIn 1s ease forwards;
@@ -194,11 +183,11 @@ form .form-control {
 .form-control input {
   height: 100%;
   width: 100%;
-  background: #333;
+  background: var(--terceary-bg);
   border: none;
   outline: none;
   border-radius: 4px;
-  color: #fff;
+  color: var(--text-color);
   font-size: 1rem;
   padding: 0 20px;
   transition: background-color 0.3s ease;
@@ -216,11 +205,11 @@ form .form-control {
   transform: translateY(-50%);
   font-size: 1rem;
   pointer-events: none;
-  color: #8c8c8c;
+  color:var(--subtext-color);
   transition: all 0.1s ease;
 }
 
-.form-control input:is(:focus, :valid)~label {
+.form-control input:is(:focus, :valid) ~ label {
   font-size: 0.75rem;
   transform: translateY(-130%);
 }
@@ -229,7 +218,7 @@ form button {
   width: 100%;
   padding: 13px 0;
   font-size: 1rem;
-  background: #e50914;
+  background: var(--accent);
   color: #fff;
   font-weight: 500;
   border-radius: 5px;
@@ -242,9 +231,9 @@ form button {
 }
 
 form button:hover {
-  background: #c40812;
-
+  background: var(--accent-hover);
   animation-play-state: paused;
+  box-shadow: 0 0 0 3px rgb(148, 15, 15);
 }
 
 .form-wrapper a {
@@ -256,7 +245,7 @@ form button:hover {
 }
 
 .form-wrapper :where(label, p, small, a) {
-  color: #b3b3b3;
+  color: var(--subtext-color);
 }
 
 form .remember-me {
@@ -266,7 +255,7 @@ form .remember-me {
 
 form .remember-me input {
   margin-right: 5px;
-  accent-color: #b3b3b3;
+  accent-color: var(--subtext-color);
 }
 
 form .form-help :where(label, a) {
@@ -274,7 +263,7 @@ form .form-help :where(label, a) {
 }
 
 .form-wrapper p a {
-  color: #fff;
+  color: var(--text-color);
 }
 
 .password-wrapper {
@@ -293,7 +282,7 @@ form .form-help :where(label, a) {
   transform: translateY(-50%);
   cursor: pointer;
   user-select: none;
-  color: #aaaaaa;
+  color: var(--subtext-color);
   width: 10px;
   height: 10px;
   z-index: 2;
@@ -301,7 +290,7 @@ form .form-help :where(label, a) {
 }
 
 .eye-icon:hover {
-  color: #e50914;
+  color: var(--accent-hover);
 }
 
 @media (max-width: 740px) {

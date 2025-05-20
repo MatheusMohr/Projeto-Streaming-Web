@@ -5,253 +5,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
   <title>Catálogo | MathCine</title>
-
-  <style>
-    /* =============== RESET E VARIÁVEIS =============== */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    :root {
-      --primary-bg: #000000;
-      --secondary-bg: #212020;
-      --terceary-bg: #2e2e2e;
-      --accent: #f11717fb;
-      --accent-hover: #d31818;
-      --text-color: #ffffff;
-      --subtext-color: #cccccc;
-      --header-gradient: linear-gradient(25deg, var(--primary-bg), var(--primary-bg), var(--primary-bg),
-          var(--secondary-bg), var(--secondary-bg));
-    }
-
-    /* =============== GERAL / BODY / FONTS =============== */
-    body {
-      font-family: Arial, sans-serif;
-      padding-top: 0;
-      overflow-x: hidden;
-      background-color: #0f0f0f;
-      color: var(--text-color);
-    }
-
-    /* =============== HEADER =========================== */
-    header {
-      background: var(--header-gradient);
-      padding: 5px 10px;
-      position: sticky;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-      box-shadow: 0 4px 10px rgba(255, 3, 3, 0.438);
-      overflow: hidden;
-      transition: top 0.3s ease;
-    }
-
-    .header-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 100%;
-      margin: 0 auto;
-    }
-
-    header img {
-      width: 70px;
-      object-fit: contain;
-      cursor: pointer;
-    }
-
-    .top-links {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 15px;
-      justify-content: flex-end;
-    }
-
-    .top-links .btn {
-      font-family: 'Montserrat', sans-serif;
-      padding: 9px 20px;
-      color: var(--text-color);
-      text-decoration: none;
-      border-radius: 50px;
-      font-size: 18px;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-    }
-
-    .top-links .btn:hover {
-      background-color: #3d3d3d;
-    }
-
-    /* =============== RESPONSIVO - HEADER ============= */
-    @media (max-width: 768px) {
-      header {
-        padding: 10px 15px;
-      }
-
-      .header-container {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .top-links {
-        flex-direction: column;
-        gap: 5px;
-        justify-content: center;
-        width: 100%;
-      }
-
-      header img {
-        width: 60px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .top-links .btn {
-        font-size: 16px;
-        padding: 8px 15px;
-      }
-
-      header img {
-        width: 50px;
-      }
-    }
-
-    /* =============== CATÁLOGO DE FILMES ============= */
-    .catalogo {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 12px;
-      padding: 5px 10px;
-      justify-items: center;
-      margin: 5px auto 60px;
-      max-width: 100%;
-      /* aumentei para ficar mais largo colado nas bordas */
-    }
-
-    @media screen and (max-width: 1024px) {
-      .catalogo {
-        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-        gap: 12px;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .catalogo {
-        grid-template-columns: 1fr 1fr;
-        gap: 12px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .catalogo {
-        grid-template-columns: 1fr;
-        gap: 12px;
-      }
-    }
-
-    /* =============== ESTILO DOS CARDS FILME ========== */
-    .filme {
-      background-color: #1a1a1a;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      width: 100%;
-      max-width: 280px;
-      text-align: center;
-      transition: transform 0.35s ease, box-shadow 0.35s ease;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      position: relative;
-      cursor: pointer;
-      z-index: 1;
-      margin-top: 20px;
-    }
-
-    .filme:hover,
-    .filme:focus-within {
-      box-shadow: 0 6px 20px rgba(229, 9, 20, 0.25);
-      z-index: 10;
-    }
-
-    .filme img {
-      width: 100%;
-      height: auto;
-      max-height: 400px;
-      object-fit: cover;
-      display: block;
-      border-radius: 10px 10px 0 0;
-      position: relative;
-      z-index: 1;
-    }
-
-    .filme h3 {
-      margin: 5px;
-      font-size: 18px;
-      color: var(--text-color);
-      letter-spacing: 1px;
-      font-weight: 500;
-      padding: 10px 5px 15px;
-      background-color: var(--secondary-bg);
-      border-radius: 0 0 10px 10px;
-    }
-
-    /* =============== DESCRIÇÃO SOBRE A IMAGEM (OVERLAY) ========== */
-    .descricao-abaixo {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(20, 20, 20, 0.85);
-      color: var(--text-color);
-      opacity: 0;
-      padding: 15px 15px 20px;
-      border-radius: 10px 10px 0 0;
-      overflow-y: auto;
-      transition: opacity 0.35s ease;
-      font-size: 0.9rem;
-      line-height: 1.4;
-      text-align: left;
-      z-index: 20;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .filme.expanded .descricao-abaixo {
-      opacity: 1;
-    }
-
-    .descricao-abaixo h4 {
-      font-family: 'Playfair Display', serif;
-      font-weight: 700;
-      font-size: 1.3rem;
-      margin-bottom: 10px;
-      color: var(--accent);
-      text-align: center;
-    }
-
-    .descricao-abaixo p {
-      margin-bottom: 8px;
-    }
-
-    .descricao-abaixo p strong {
-      color: var(--accent);
-    }
-
-    .fixarRodape {
-      background-color: #141414;
-      padding: 12px 0;
-      text-align: center;
-      color: #777;
-      font-size: 0.9rem;
-      border-top: 1px solid #333;
-    }
-  </style>
+  <link rel="stylesheet" href="../Css/catalogoDemo.css">
+    <script src="../JS/catalogoDemo.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/pouchdb@7.3.1/dist/pouchdb.min.js"></script>
 </head>
 
 <body>
@@ -265,7 +21,7 @@
   </header>
   <div class="catalogo" id="catalogo">
 
-    <div class="filme" tabindex="0" data-titulo="Jurassic Park"
+    <div class="filme" data-titulo="Jurassic Park"
       data-sinopse="Jurassic Park é um parque temático revolucionário onde cientistas clonam dinossauros a partir de DNA preservado, mas uma falha no sistema causa caos quando as criaturas escapam e ameaçam os visitantes."
       data-classificacao="10 anos" data-duracao="2h 7min" data-genero="Aventura, Ficção Científica" data-ano="1993">
       <img src="https://image.tmdb.org/t/p/w500/oU7Oq2kFAAlGqbU4VoAE36g4hoI.jpg" alt="Jurassic Park" />
@@ -273,7 +29,7 @@
       <div class="descricao-abaixo"></div>
     </div>
 
-    <div class="filme" tabindex="0" data-titulo="Matrix"
+    <div class="filme" data-titulo="Matrix"
       data-sinopse="Neo descobre que a realidade é uma simulação controlada por máquinas e junta-se a um grupo rebelde para lutar pela liberdade da humanidade."
       data-classificacao="14 anos" data-duracao="2h 16min" data-genero="Ação, Ficção Científica" data-ano="1999">
       <img src="https://image.tmdb.org/t/p/w500/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg" alt="Matrix" />
@@ -281,7 +37,7 @@
       <div class="descricao-abaixo"></div>
     </div>
 
-    <div class="filme" tabindex="0" data-titulo="O Senhor dos Anéis"
+    <div class="filme" data-titulo="O Senhor dos Anéis"
       data-sinopse="Frodo e seus companheiros embarcam em uma perigosa jornada para destruir um anel mágico com o poder de dominar a Terra Média."
       data-classificacao="12 anos" data-duracao="2h 58min" data-genero="Aventura, Fantasia" data-ano="2001">
       <img src="https://image.tmdb.org/t/p/w500/6oom5QYQ2yQTMJIbnvbkBL9cHo6.jpg" alt="O Senhor dos Anéis" />
@@ -289,7 +45,7 @@
       <div class="descricao-abaixo"></div>
     </div>
 
-    <div class="filme" tabindex="0" data-titulo="Titanic"
+    <div class="filme" data-titulo="Titanic"
       data-sinopse="Um romance inesquecível entre Jack e Rose, dois jovens de diferentes classes sociais que vivem uma paixão intensa a bordo do navio Titanic."
       data-classificacao="12 anos" data-duracao="3h 14min" data-genero="Drama, Romance" data-ano="1997">
       <img src="https://image.tmdb.org/t/p/w500/9xjZS2rlVxm8SFx8kPC3aIGCOYQ.jpg" alt="Titanic" />
@@ -297,7 +53,7 @@
       <div class="descricao-abaixo"></div>
     </div>
 
-    <div class="filme" tabindex="0" data-titulo="Vingadores: Ultimato"
+    <div class="filme" data-titulo="Vingadores: Ultimato"
       data-sinopse="Após a devastação causada por Thanos, os Vingadores unem forças para uma missão desesperada com o objetivo de restaurar o equilíbrio do universo."
       data-classificacao="12 anos" data-duracao="3h 2min" data-genero="Ação, Aventura, Ficção Científica"
       data-ano="2019">
@@ -310,62 +66,6 @@
   <footer class="fixarRodape">
     <p>&copy; <span id="anoAtual"></span> MATHFlix</p>
   </footer>
-
-  <script>
-    document.getElementById("anoAtual").textContent = new Date().getFullYear();
-
-    const filmes = document.querySelectorAll('.filme');
-
-    filmes.forEach(filme => {
-      const descBox = filme.querySelector('.descricao-abaixo');
-
-      function mostrarDescricao() {
-        const titulo = filme.dataset.titulo;
-        const sinopse = filme.dataset.sinopse;
-        const classificacao = filme.dataset.classificacao;
-        const duracao = filme.dataset.duracao;
-        const genero = filme.dataset.genero;
-        const ano = filme.dataset.ano;
-
-        descBox.innerHTML = `
-          <h4>${titulo}</h4>
-          <p>${sinopse}</p>
-          <p><strong>Classificação:</strong> ${classificacao}</p>
-          <p><strong>Duração:</strong> ${duracao}</p>
-          <p><strong>Gênero:</strong> ${genero}</p>
-          <p><strong>Ano:</strong> ${ano}</p>
-        `;
-
-        filme.classList.add('expanded');
-      }
-
-      function esconderDescricao() {
-        filme.classList.remove('expanded');
-      }
-
-      filme.addEventListener('mouseenter', mostrarDescricao);
-      filme.addEventListener('mouseleave', esconderDescricao);
-      filme.addEventListener('focus', mostrarDescricao);
-      filme.addEventListener('blur', esconderDescricao);
-    });
-
-    function filtrarFilmes() {
-      const categoria = document.getElementById('categoria').value.toLowerCase();
-      const pesquisa = document.getElementById('pesquisa').value.toLowerCase();
-      filmes.forEach(filme => {
-        const generos = filme.dataset.genero.toLowerCase();
-        const titulo = filme.dataset.titulo.toLowerCase();
-        const matchesCategoria = categoria === 'todas' || generos.includes(categoria);
-        const matchesPesquisa = titulo.includes(pesquisa);
-        if (matchesCategoria && matchesPesquisa) {
-          filme.style.display = '';
-        } else {
-          filme.style.display = 'none';
-        }
-      });
-    }
-    document.getElementById('pesquisa').addEventListener('input', filtrarFilmes);
-  </script>
 </body>
 
 </html>

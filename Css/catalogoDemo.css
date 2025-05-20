@@ -1,0 +1,243 @@
+    /* =============== RESET E VARIÁVEIS =============== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-bg: #000000;
+      --secondary-bg: #212020;
+      --terceary-bg: #2e2e2e;
+      --accent: #f11717fb;
+      --accent-hover: #d31818;
+      --text-color: #ffffff;
+      --subtext-color: #cccccc;
+      --header-gradient: linear-gradient(25deg, var(--primary-bg), var(--primary-bg), var(--primary-bg),
+          var(--secondary-bg), var(--secondary-bg));
+    }
+
+    /* =============== GERAL / BODY / FONTS =============== */
+    body {
+      font-family: Arial, sans-serif;
+      padding-top: 0;
+      overflow-x: hidden;
+      background-color: #0f0f0f;
+      color: var(--text-color);
+    }
+
+    /* =============== HEADER =========================== */
+    header {
+      background: var(--header-gradient);
+      padding: 5px 10px;
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 10px rgba(255, 3, 3, 0.438);
+      overflow: hidden;
+      transition: top 0.3s ease;
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 100%;
+      margin: 0 auto;
+    }
+
+    header img {
+      width: 70px;
+      object-fit: contain;
+      cursor: pointer;
+    }
+
+    .top-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 15px;
+      justify-content: flex-end;
+    }
+
+    .top-links .btn {
+      font-family: 'Montserrat', sans-serif;
+      padding: 9px 20px;
+      color: var(--text-color);
+      text-decoration: none;
+      border-radius: 50px;
+      font-size: 18px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .top-links .btn:hover {
+      background-color: #3d3d3d;
+    }
+
+    /* =============== RESPONSIVO - HEADER ============= */
+    @media (max-width: 768px) {
+      header {
+        padding: 10px 15px;
+      }
+
+      .header-container {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .top-links {
+        flex-direction: column;
+        gap: 5px;
+        justify-content: center;
+        width: 100%;
+      }
+
+      header img {
+        width: 60px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .top-links .btn {
+        font-size: 16px;
+        padding: 8px 15px;
+      }
+
+      header img {
+        width: 50px;
+      }
+    }
+
+    /* =============== CATÁLOGO DE FILMES ============= */
+    .catalogo {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 12px;
+      padding: 5px 10px;
+      justify-items: center;
+      margin: 5px auto 60px;
+      max-width: 100%;
+      /* aumentei para ficar mais largo colado nas bordas */
+    }
+
+    @media screen and (max-width: 1024px) {
+      .catalogo {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 12px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .catalogo {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .catalogo {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+    }
+
+    /* =============== ESTILO DOS CARDS FILME ========== */
+    .filme {
+      background-color: #1a1a1a;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 300px;
+      text-align: center;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      cursor: pointer;
+      z-index: 1;
+    }
+
+    .filme:hover,
+    .filme:focus-within {
+      box-shadow: 0 6px 20px rgba(229, 9, 20, 0.25);
+      z-index: 10;
+    }
+
+    .filme img {
+      width: 100%;
+      height: auto;
+      max-height: 370px;
+      object-fit: cover;
+      display: block;
+      border-radius: 10px 14px 0 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .filme h3 {
+      margin: 5px;
+      font-size: 18px;
+      color: var(--text-color);
+      letter-spacing: 1px;
+      font-weight: 500;
+      padding: 5px 5px 5px;
+      background-color: var(--secondary-bg);
+      border-radius: 0 0 10px 10px;
+    }
+
+    /* =============== DESCRIÇÃO SOBRE A IMAGEM (OVERLAY) ========== */
+    .descricao-abaixo {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(20, 20, 20, 0.85);
+      color: var(--text-color);
+      opacity: 0;
+      padding: 15px 15px 20px;
+      border-radius: 10px 10px 0 0;
+      overflow-y: auto;
+      transition: opacity 0.35s ease;
+      font-size: 0.9rem;
+      line-height: 1.4;
+      text-align: left;
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .filme.expanded .descricao-abaixo {
+      opacity: 1;
+    }
+
+    .descricao-abaixo h4 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      color: var(--accent);
+      text-align: center;
+    }
+
+    .descricao-abaixo p {
+      margin-bottom: 8px;
+    }
+
+    .descricao-abaixo p strong {
+      color: var(--accent);
+    }
+
+    .fixarRodape {
+      background-color: #141414;
+      padding: 12px 0;
+      text-align: center;
+      color: #777;
+      font-size: 0.9rem;
+      border-top: 1px solid #333;
+    }

@@ -21,7 +21,7 @@ body {
   font-family: Arial, sans-serif;
   padding-top: 0;
   overflow-x: hidden;
-  background-color: #0f0f0f;
+  background-color: var(--primary-bg);
 }
 
 /* =============== HEADER =========================== */
@@ -76,7 +76,7 @@ header img {
   text-decoration: none;
 }
 
-/* =============== RESPONSIVO - HEADER ============= */
+/* =============== RESPONSIViDADE - HEADER ============= */
 @media (max-width: 768px) {
   header {
     padding: 10px 15px;
