@@ -133,11 +133,11 @@ header img {
   padding: 0 10px;
   margin-left: 10px;
   font-size: 16px;
-  width: 190px;
-  border: 1px solid var(--primary-bg);
+  width: 260px;
+  border: 3px solid var(--secondary-bg);
   border-radius: 30px;
   margin-right: 10px;
-  background-color: #222;
+  background-color: var(--secondary-bg);
   color: var(--text-color);
   transition: all 0.3s ease;
   outline: none;
@@ -148,14 +148,14 @@ header img {
 
 .search-container input[type="search"]:focus {
   border-color: var(--accent);
-  background-color: #444;
+  background-color: var(--terceary-bg);
   color: var(--text-color);
 }
 
 label[for="categoria"] {
-  font-weight: 700;
+  font-weight: 500;
   font-size: 16px;
-  margin-left: 10px;
+  margin-left: 15px;
   color: var(--text-color);
   margin-right: 5px;
   user-select: none;
@@ -165,8 +165,8 @@ select#categoria {
   padding: 0 10px;
   font-size: 16px;
   border-radius: 20px;
-  border: 1.5px solid #222;
-  background-color: #222;
+  border: 3px solid var(--secondary-bg);
+  background-color: var(--secondary-bg);
   color: #eee;
   cursor: pointer;
   transition: border-color 0.3s ease, background-color 0.3s ease;
@@ -179,7 +179,7 @@ select#categoria {
 select#categoria:hover,
 select#categoria:focus {
   border-color: var(--accent);
-  background-color: #333;
+  background-color: var(--terceary-bg);
   outline: none;
   color: #fff;
 }
@@ -198,9 +198,8 @@ select#categoria:focus {
 /* =============== CATÁLOGO DE FILMES ============= */
 .catalogo {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 12px;
-  /* igual em linhas e colunas */
   padding: 5px 10px;
   justify-items: center;
   margin: 0 auto;
@@ -249,7 +248,7 @@ select#categoria:focus {
 .filme img {
   width: 100%;
   height: auto;
-  max-height: 365px;
+  max-height: 400px;
   object-fit: cover;
 }
 

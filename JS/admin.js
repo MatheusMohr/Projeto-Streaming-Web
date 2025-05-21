@@ -11,7 +11,6 @@ if (sessionStorage.getItem('usuario_admin') !== 'true') {
 const dbMovies = new PouchDB('movies');
 const dbUsers = new PouchDB('mathflix-users');
 
-/* Variáveis de controle */
 let filmeEditando = null;
 let usuarioEditando = null;
 
@@ -26,7 +25,7 @@ const formUser = document.getElementById('user-form');
 const btnSalvarU = document.getElementById('btn-save-user');
 const btnCancelU = document.getElementById('btn-cancel-user');
 
-/* ---------- gerar novo _id sequencial p/ usuário ----------------------- */
+/* ---------- gerar novo _id p/ usuário ----------------------- */
 async function gerarNovoIdUsuario() {
   const r = await dbUsers.allDocs({ startkey: 'usuario_', endkey: 'usuario_\ufff0' });
   const max = r.rows
@@ -142,7 +141,6 @@ formUser.addEventListener('submit', async (e) => {
 
   try {
     const allUsers = await dbUsers.allDocs({ include_docs: true });
-    // Verifica duplicidade de email, ignorando o usuário em edição
     const dup = allUsers.rows.some(r => r.doc.email === email && r.doc._id !== (usuarioEditando?._id));
 
     if (dup) {
@@ -151,7 +149,6 @@ formUser.addEventListener('submit', async (e) => {
     }
 
     if (usuarioEditando) {
-      // Atualizar usuário existente
       Object.assign(usuarioEditando, { nome, email, admin });
 
       if (senha) {
@@ -164,7 +161,6 @@ formUser.addEventListener('submit', async (e) => {
       btnSalvarU.textContent = 'Adicionar Usuário';
       btnCancelU.style.display = 'none';
     } else {
-      // Criar novo usuário
       const senhaHash = await hashSenha(senha);
 
       const novo = {
@@ -234,7 +230,6 @@ async function carregarUsuarios() {
     tbody.appendChild(tr);
   });
 }
-
 /* ---------------- inicialização ---------------- */
 document.addEventListener('DOMContentLoaded', () => {
   carregarFilmes();

@@ -8,7 +8,6 @@ async function gerarNovoIdUsuario() {
   return 'usuario_' + (max + 1);
 }
 
-// Função para gerar hash SHA-256
 async function hashSenha(senha) {
   const encoder = new TextEncoder();
   const data = encoder.encode(senha);

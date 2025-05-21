@@ -1,7 +1,7 @@
 (() => {
   const DB_NAME = 'mathflix-users';
   const ADMIN_EMAIL = 'admin@mathcine.com';
-  // hash SHA-256 da senha 'admin'
+
   const ADMIN_PASSWORD_HASH = '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918';
   const REMEMBER_KEY = 'mathcine_last_email';
 
@@ -17,8 +17,8 @@
     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
          viewBox="0 0 24 24" fill="none" stroke="currentColor"
          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/>
-      <circle cx="12" cy="12" r="3"/>
+      <path d="M2 12s3-6 10-6 10 6 10 6-3 6-10 6S2 12 2 12z"/>
+      <circle cx="12" cy="12" r="2"/>
     </svg>`;
   const eyeClosed = `
     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
@@ -27,15 +27,14 @@
       <path d="M2 12s3-6 10-6 10 6 10 6-3 6-10 6S2 12 2 12z"/>
       <line x1="4" y1="4" x2="20" y2="20"/>
     </svg>`;
-  eyeBtn.innerHTML = eyeOpen;
+  eyeBtn.innerHTML = eyeClosed;
 
   eyeBtn.addEventListener('click', () => {
     const hidden = passInput.type === 'password';
     passInput.type = hidden ? 'text' : 'password';
-    eyeBtn.innerHTML = hidden ? eyeClosed : eyeOpen;
+    eyeBtn.innerHTML = hidden ? eyeOpen : eyeClosed;
   });
 
-  // Hash SHA-256 da senha digitada
   async function hashSenha(senha) {
     const encoder = new TextEncoder();
     const data = encoder.encode(senha);
@@ -44,7 +43,6 @@
     return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
   }
 
-  // Preenche email salvo
   const savedEmail = localStorage.getItem(REMEMBER_KEY);
   if (savedEmail) {
     emailInput.value = savedEmail;
@@ -57,7 +55,6 @@
     const email = emailInput.value.trim().toLowerCase();
     const pwd = passInput.value;
 
-    // Login admin com hash
     if (email === ADMIN_EMAIL) {
       const hashedPwd = await hashSenha(pwd);
       if (hashedPwd === ADMIN_PASSWORD_HASH) {
@@ -69,7 +66,6 @@
       }
     }
 
-    // Usuário comum
     try {
       const result = await db.allDocs({ include_docs: true });
       const user = result.rows.find(r => r.doc.email === email)?.doc;
