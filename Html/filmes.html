@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
@@ -11,19 +12,24 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/pouchdb@7.3.0/dist/pouchdb.min.js"></script>
 </head>
+
 <body>
   <header>
     <div class="header-container">
-      <a href="index.html">
+      <a href="../Html/index.html">
         <img src="../Imagem/download.png" alt="Logo MathCine" style="cursor:pointer;" />
       </a>
-      <div class="top-links">
-        <a href="ajuda.html" class="btn ajuda-link">Precisa de ajuda?</a>
-        <a href="contato.html" class="btn">Contato</a>
-        <a href="faq.html" class="btn">FAQ</a>
-        <a href="suporte.html" class="btn">Suporte</a>
-        <a href="index.html" class="btn">Sair</a>
-      </div>
+      <nav class="top-links">
+        <div class="links-centro">
+          <a href="contato.html" class="btn">Contato</a>
+          <a href="faq.html" class="btn">FAQ</a>
+          <a href="suporte.html" class="btn">Suporte</a>
+          <a href="ajuda.html" class="btn">Precisa de ajuda?</a>
+        </div>
+        <div class="links-direita">
+          <a href="index.html" class="btn sair-link">Sair</a>
+        </div>
+      </nav>
     </div>
   </header>
   <div class="search-container">
@@ -217,10 +223,10 @@
       </div>
     </div>
   </div>
-    <footer class="fixarRodape">
-      <p>&copy; <span id="anoAtual"></span> MATHFlix</p>
-      <a href="admin.html" class="btn gerenciar">Gerenciar Filmes</a>
-    </footer>
+  <footer class="fixarRodape">
+    <p>&copy; <span id="anoAtual"></span> MATHFlix</p>
+    <a href="admin.html" class="btn gerenciar">Gerenciar Filmes</a>
+  </footer>
   <script>
     document.getElementById("anoAtual").textContent = new Date().getFullYear();
   </script>

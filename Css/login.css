@@ -50,7 +50,6 @@ body {
   }
 }
 
-/* Estilos para o cabeçalho */
 header {
   background: var(--header-gradient);
   padding: 5px 10px;

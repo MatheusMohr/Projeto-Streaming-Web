@@ -56,25 +56,31 @@
 
     .top-links {
       display: flex;
-      align-items: center;
-      gap: 10px;
+      justify-content: right;
+      gap: 20px;
       padding: 10px 15px;
-      justify-content: flex-end;
+      width: 100%;
+      margin-left: -60px;
+      margin-right: 0px;
+      overflow-x: hidden;
     }
 
     .top-links .btn {
       font-family: 'Montserrat', sans-serif;
-      padding: 9px 20px;
-      color: var(--text-color);
+      padding: 10px 20px;
+      color: rgb(224, 224, 224);
       text-decoration: none;
-      border-radius: 50px;
+      border-radius: 80px;
       font-size: 18px;
-      transition: background-color 0.3s ease, transform 0.2s ease;
+      font-weight: 400;
+      transition: background-color 0.3s ease;
     }
 
     .top-links .btn:hover {
-      background-color: #3d3d3d;
+      box-shadow: 0 0 0 3px rgba(241, 23, 23, 0.74);
+      background-color: var(--secondary-bg);
     }
+
 
     /* =============== RESPONSIVO - HEADER ============= */
     @media (max-width: 768px) {
