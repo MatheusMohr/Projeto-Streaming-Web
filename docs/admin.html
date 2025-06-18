@@ -5,28 +5,28 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Admin | MathCine</title>
-  <link rel="stylesheet" href="../css/admin.css" />
+  <link rel="stylesheet" href="../docs/admin.css" />
   <script src="https://cdn.jsdelivr.net/npm/pouchdb@7.3.0/dist/pouchdb.min.js"></script>
-  <script src="../js/admin.js" defer></script>
+  <script src="../docs/admin.js" defer></script>
 </head>
 
 <script>
   if (sessionStorage.getItem('usuario_admin') !== 'true') {
     alert('Acesso restrito: você precisa ser administrador para acessar!');
-    location.href = 'filmes.html';
+    location.href = '../docs/filmes.html';
   }
 </script>
 
 <body>
   <header>
     <div class="header-container">
-      <a href="../index.html">
-        <img src="../docs/imagem/download.png" alt="Logo MathCine" style="cursor:pointer;" />
+      <a href="../docs/index.html">
+        <img src="../docs/download.png" alt="Logo MathCine" style="cursor:pointer;" />
       </a>
       <h1>Administração MathCine</h1>
       <div class="top-links">
-        <a href="../docs/html/filmes.html" class="btn catalogo">Acessar Catalogo</a>
-        <a href="../docs/html/index.html" class="btn menu">Voltar ao menu</a>
+        <a href="../docs/filmes.html" class="btn catalogo">Acessar Catalogo</a>
+        <a href="../docs/index.html" class="btn menu">Voltar ao menu</a>
       </div>
     </div>
   </header>
